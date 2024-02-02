@@ -1,5 +1,5 @@
 // ---------------------------------------------------------  
-// StraightLine.cs  
+// CollisionDetection.cs  
 //   
 // 作成日:  
 // 作成者:  
@@ -7,13 +7,14 @@
 using UnityEngine;
 using System.Collections;
 
-public class StraightLineMove : MonoBehaviour
+public class CollisionDetection : MonoBehaviour
 {
 
     #region 変数  
 
-    private const float MOVESPEED = 5f;
-    private Transform _transform = default;
+    private bool flag = false;
+    private float _time = 0;
+    private float _timer = 2f;
 
     #endregion
 
@@ -34,21 +35,30 @@ public class StraightLineMove : MonoBehaviour
     /// </summary>  
     void Start ()
     {
-        _transform = this.transform;
     }
 
     /// <summary>  
     /// 更新処理  
     /// </summary>  
-    private void Update()
+    void Update ()
     {
-        _transform.Translate(MOVESPEED * Time.deltaTime,0, 0);
+        if(flag)
+        {
+            _time += Time.deltaTime;
+            if(_time >= _timer)
+            {
+                flag = false;
+                _time = 0;
+            }
+        }
     }
 
-    private void OnBecameInvisible()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        //画面外に行ったら非アクティブにする
-        gameObject.SetActive(false);
+        if(collision.tag == "Ball" && !flag)
+        {
+            flag = true;
+        }
     }
 
     #endregion

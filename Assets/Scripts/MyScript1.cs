@@ -10,39 +10,29 @@ using System.Collections;
 public class MyScript1 : MonoBehaviour
 {
 
-    // 円の半径を設定します。
-    public float radius = 10f;
-    bool flag = false;
+    private float _xPos = default;
+    private float _yPos = default;
+    private float phase = default;
+    private float x = default;
+    private float y = default;
 
-    // 初期位置を取得し、高さを保持します。
-    Vector3 initPos;
-
-    void Start()
+    private void Start()
     {
-        // 初期位置を保持します。
-        initPos = gameObject.transform.position;
+        x = transform.position.x;
+        y = transform.position.y;
     }
 
-    void Update()
+    private void Update()
     {
-        CalcPosition();
+        phase = Time.time * 0.5f * Mathf.PI;
+        _xPos = 4 * Mathf.Sin(phase);
+        _yPos = 4 * Mathf.Cos(phase);
+        transform.position = new Vector2((x - 4) + _xPos,(y - 4) + _yPos);
     }
 
-    /// <Summary>
-    /// オブジェクトの位置を計算するメソッドです。
-    /// </Summary>
-    void CalcPosition()
+    private void OnBecameInvisible()
     {
-        // 位相を計算します。
-        float phase = Time.time * 0.5f * Mathf.PI;
-
-        // 現在の位置を計算します。
-        float xPos = radius * Mathf.Cos(phase);
-        float zPos = radius * Mathf.Sin(phase);
-
-        // ゲームオブジェクトの位置を設定します。
-        Vector3 pos = new Vector3(-xPos, initPos.y, zPos);
-        gameObject.transform.position = pos;
+        //画面外に行ったら非アクティブにする
+        gameObject.SetActive(false);
     }
-
 }
