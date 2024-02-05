@@ -41,6 +41,10 @@ public class MyScript : MonoBehaviour
     void Start ()
     {
         bullets = new GameObject("PlayerBullets").transform;
+        for(int i = 0; i < 10; i++)
+        {
+            Instantiate(_gameObject, gameObject.transform.position, Quaternion.Euler(0, 0, -90), bullets);
+        }
     }
 
     /// <summary>  
@@ -63,6 +67,7 @@ public class MyScript : MonoBehaviour
 
             if(_conut >= 5)
             {
+                Debug.Log("A");
                 _nowTime = 0;
                 _conut = 0;
             }

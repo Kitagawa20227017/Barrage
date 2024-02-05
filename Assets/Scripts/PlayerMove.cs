@@ -21,8 +21,8 @@ public class PlayerMove : MonoBehaviour
     private const float MINUS_HORIZONMOVE = -5f;
 
     // 縦軸の移動量
-    private const float PLUS_VERTICAL = 2.5f;
-    private const float MINUS_VERTICAL = -2.5f;
+    private const float PLUS_VERTICAL = 4f;
+    private const float MINUS_VERTICAL = -4f;
 
     // キーの入力値の補正
     private const float PLUS = 1f;
