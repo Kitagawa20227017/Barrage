@@ -12,7 +12,7 @@ public class StraightLineMove : MonoBehaviour
 
     #region 変数  
 
-    private const float MOVESPEED = 5f;
+    private const float MOVESPEED = 10f;
     private Transform _transform = default;
 
     #endregion

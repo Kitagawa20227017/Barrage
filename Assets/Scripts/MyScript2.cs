@@ -14,6 +14,7 @@ public class MyScript2 : MonoBehaviour
 
     private float a = 0;
     private bool flag = false;
+    private float time = 0;
 
     #endregion
 
@@ -34,6 +35,7 @@ public class MyScript2 : MonoBehaviour
     /// </summary>  
     void Start ()
     {
+        a = transform.position.x;
     }
 
     /// <summary>  
@@ -41,23 +43,23 @@ public class MyScript2 : MonoBehaviour
     /// </summary>  
     void Update ()
     {
-        if(!flag)
+        if (!flag)
         {
-            a += 0.01f;
+            a += 1.5f * Time.deltaTime;
             if (a >= 10f)
             {
                 flag = true;
             }
         }
-        else if(flag)
+        else if (flag)
         {
-            a -= 0.01f;
+            a -= 1.5f * Time.deltaTime;
             if (a <= -10f)
             {
                 flag = false;
             }
         }
-        gameObject.transform.position = new Vector3(transform.position.x - a * Time.deltaTime, transform.position.y, transform.position.z);
+        gameObject.transform.position = new Vector3(a, transform.position.y, transform.position.z);
     }
 
     #endregion
