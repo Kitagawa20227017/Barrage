@@ -7,12 +7,20 @@
 using UnityEngine;
 using System.Collections;
 
-public class MyScript4 : MonoBehaviour
+public class EnemyMove : MonoBehaviour
 {
     #region 変数
 
+    [SerializeField]
+    private float timer = 2f;
+
+    [SerializeField]
+    private int aa = 90;
+
+    [SerializeField]
+    private float _moveSpeed = 5f;
+
     private bool flag = false;
-    private const float MOVESPEED = 5f;
     private float time = 0;
     private float n = 0;
     private float a = 0;
@@ -62,12 +70,12 @@ public class MyScript4 : MonoBehaviour
         if (flag)
         {
             time += Time.deltaTime;
-            if (time >= 2f && Mathf.Round(_transform.eulerAngles.z) != 90)
-            {
-                n += aaa * Time.deltaTime;
-                _transform.rotation = Quaternion.Euler(0, 0, a + n);
-            }
-            _transform.Translate(MOVESPEED * Time.deltaTime, 0, 0);
+            //if (time >= timer && Mathf.Round(_transform.eulerAngles.z) != 90)
+            //{
+            //    n += aaa * Time.deltaTime;
+            //    _transform.rotation = Quaternion.Euler(0, 0, a + n);
+            //}
+            _transform.Translate(_moveSpeed * Time.deltaTime, 0, 0);
         }
     }
     private void OnBecameVisible()

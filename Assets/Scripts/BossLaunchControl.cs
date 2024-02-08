@@ -1,18 +1,19 @@
 // ---------------------------------------------------------  
-// MyScript.cs  
+// BossLaunchControl.cs  
 //   
 // 作成日:  
 // 作成者:  
 // ---------------------------------------------------------  
 using UnityEngine;
+using System.Collections;
 
-public class MyScript : MonoBehaviour
+public class BossLaunchControl : MonoBehaviour
 {
 
     #region 変数  
 
     [SerializeField]
-    private GameObject[] _gameObject;
+    private GameObject _gameObject;
 
     [SerializeField, Range(0, 90), Header("斜めの弾の数(左右対称)")]
     private int s = 0;
@@ -29,16 +30,12 @@ public class MyScript : MonoBehaviour
     [SerializeField]
     private float _time = 0.25f;
 
-    private Transform[] bullets;
+    private Transform bullets;
     private int _conut = 0;
     private float _nowTime = 0;
     private float _nowtime = 0;
-    private float _angle = default;
-
-    private int _patrn = 0;
-    private string ppppp = "BossBullets";
-
     private bool isflag = false;
+    private float _angle = default;
 
     #endregion
 
@@ -60,19 +57,10 @@ public class MyScript : MonoBehaviour
     void Start()
     {
         _angle = transform.eulerAngles.z;
-        bullets = new Transform[_gameObject.Length];
-        for(int i = 0; i < _gameObject.Length; i++)
+        bullets = new GameObject("BossBullets").transform;
+        for (int i = 0; i < 100; i++)
         {
-
-            bullets[i] = new GameObject(ppppp + i).transform;
-
-        }
-        for (int j = 0; j < _gameObject.Length; j++)
-        {
-            for (int i = 0; i < 100; i++)
-            {
-                Instantiate(_gameObject[j], gameObject.transform.position, Quaternion.Euler(0, 0, -90), bullets[j]);
-            }
+            Instantiate(_gameObject, gameObject.transform.position, Quaternion.Euler(0, 0, -90), bullets);
         }
     }
 
@@ -88,12 +76,6 @@ public class MyScript : MonoBehaviour
         _nowTime += Time.deltaTime;
         if (_nowTime >= _time)
         {
-            if(!isflag)
-            {
-                _patrn = Random.Range(0, _gameObject.Length);
-                Debug.Log(_patrn);
-                isflag = true;
-            }
             _nowtime += Time.deltaTime;
             if (_nowtime >= _timer && _conut <= _conutBall)
             {
@@ -106,7 +88,6 @@ public class MyScript : MonoBehaviour
             {
                 _nowTime = 0;
                 _conut = 0;
-                isflag = false;
             }
         }
     }
@@ -114,7 +95,7 @@ public class MyScript : MonoBehaviour
     private void test_2(Vector3 pos)
     {
         bool isflag = false;
-        foreach (Transform t in bullets[_patrn])
+        foreach (Transform t in bullets)
         {
             if (!t.gameObject.activeSelf)
             {
@@ -134,14 +115,14 @@ public class MyScript : MonoBehaviour
         if (isflag)
         {
             //生成時にbulletsの子オブジェクトにする
-            Instantiate(_gameObject[_patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z), bullets[_patrn]);
+            Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z), bullets);
         }
 
         for (int i = 1; i <= s; i++)
         {
             isflag = false;
             float kau = sa * i;
-            foreach (Transform t in bullets[_patrn])
+            foreach (Transform t in bullets)
             {
                 if (!t.gameObject.activeSelf)
                 {
@@ -161,7 +142,7 @@ public class MyScript : MonoBehaviour
             if (isflag)
             {
                 //生成時にbulletsの子オブジェクトにする
-                Instantiate(_gameObject[_patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + kau), bullets[_patrn]);
+                Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + kau), bullets);
             }
         }
 
@@ -169,7 +150,7 @@ public class MyScript : MonoBehaviour
         {
             isflag = false;
             float kau = sa * i;
-            foreach (Transform t in bullets[_patrn])
+            foreach (Transform t in bullets)
             {
                 if (!t.gameObject.activeSelf)
                 {
@@ -189,7 +170,7 @@ public class MyScript : MonoBehaviour
             if (isflag)
             {
                 //生成時にbulletsの子オブジェクトにする
-                Instantiate(_gameObject[_patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau), bullets[_patrn]);
+                Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau), bullets);
             }
         }
     }

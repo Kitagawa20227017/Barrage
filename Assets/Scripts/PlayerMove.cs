@@ -28,11 +28,20 @@ public class PlayerMove : MonoBehaviour
     private const float PLUS = 1f;
     private const float MINUS = -1f;
 
+    private const float PLAYER_MIN_POX_X = -12.63f;
+    private const float PLAYER_MAX_POX_X = 12.63f;
+
+    private const float PLAYER_MIN_POX_Y = 12.63f;
+    private const float PLAYER_MAX_POX_Y = 12.63f;
+
+
+
     #endregion
 
     // プレイヤーの入力方向の格納場所
     private float _horizontal = default;
     private float _vertical = default;
+
 
     #endregion
 
@@ -79,7 +88,7 @@ public class PlayerMove : MonoBehaviour
 
         #region 移動処理
 
-        if (_horizontal == PLUS)
+        if (_horizontal == PLUS )
         {
             gameObject.transform.position = new Vector2(gameObject.transform.position.x + (PLUS_HORIZONMOVE * Time.deltaTime), gameObject.transform.position.y);
         }

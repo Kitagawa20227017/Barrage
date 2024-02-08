@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2091873513284429873
+--- !u!1 &889040791772816187
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 428329868546491834}
-  - component: {fileID: 6835357188201215663}
-  - component: {fileID: 3711254364515258225}
+  - component: {fileID: 2852782344161558710}
+  - component: {fileID: 6746476236573869648}
+  - component: {fileID: 1252710536262447922}
   m_Layer: 0
-  m_Name: curve
+  m_Name: Test2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!4 &428329868546491834
+--- !u!4 &2852782344161558710
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2091873513284429873}
+  m_GameObject: {fileID: 889040791772816187}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -10, z: 0}
@@ -33,13 +33,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
---- !u!212 &6835357188201215663
+--- !u!212 &6746476236573869648
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2091873513284429873}
+  m_GameObject: {fileID: 889040791772816187}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -85,20 +85,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3711254364515258225
+--- !u!114 &1252710536262447922
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2091873513284429873}
+  m_GameObject: {fileID: 889040791772816187}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bab3c317476c6d446a6b1c5274409b5b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a9ae69a87b76ea49b77327c549a18a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nPosY: 6
-  nPosX: 0
-  goalPosX: 3
-  goalPosY: 30
-  speed: 0.75
+  _directionsTimer: 0
+  _angle: 90
+  _angleMoveSpeed: 25
+  _moveSpeed: 10
+  _rotationDirection: 0
