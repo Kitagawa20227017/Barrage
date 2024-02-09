@@ -70,7 +70,6 @@ public class SmallFryLaunchControl : MonoBehaviour
             _nowtime += Time.deltaTime;
             if (_nowtime >= _timer && _conut < _conutBall)
             {
-                Debug.Log("A");
                 test_2(gameObject.transform.position);
                 _conut++;
                 _nowtime = 0;
@@ -93,7 +92,7 @@ public class SmallFryLaunchControl : MonoBehaviour
             {
                 isflag = false;
                 //非アクティブなオブジェクトの位置と回転を設定
-                t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z));
+                t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, this.transform.eulerAngles.z));
                 //アクティブにする
                 t.gameObject.SetActive(true);
                 isflag = true;
@@ -108,7 +107,6 @@ public class SmallFryLaunchControl : MonoBehaviour
             Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z), bullets);
         }
 
-        isflag = false;
         for (int i = 1; i <= s; i++)
         {
             isflag = false;
@@ -118,7 +116,8 @@ public class SmallFryLaunchControl : MonoBehaviour
                 if (!t.gameObject.activeSelf)
                 {
                     //非アクティブなオブジェクトの位置と回転を設定
-                    t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + kau));
+                    t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, this.transform.eulerAngles.z + kau));
+                    Debug.Log(t.eulerAngles.z);
                     //アクティブにする
                     t.gameObject.SetActive(true);
                     isflag = true;
@@ -135,31 +134,32 @@ public class SmallFryLaunchControl : MonoBehaviour
             }
         }
 
-        isflag = false;
-        for (int i = 1; i <= s; i++)
-        {
-            isflag = false;
-            float kau = sa * i;
-            foreach (Transform t in bullets)
-            {
-                if (!t.gameObject.activeSelf)
-                {
-                    //非アクティブなオブジェクトの位置と回転を設定
-                    t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau));
-                    //アクティブにする
-                    t.gameObject.SetActive(true);
-                    isflag = true;
-                    break;
-                }
-            }
-            //非アクティブなオブジェクトがない場合新規生成
+        //for (int i = 1; i <= s; i++)
+        //{
+        //    isflag = false;
+        //    float kau = sa * i;
+        //    Debug.Log(kau + " : " + (transform.eulerAngles.z - kau));
+        //    foreach (Transform t in bullets)
+        //    {
+        //        if (!t.gameObject.activeSelf)
+        //        {
+        //            //非アクティブなオブジェクトの位置と回転を設定
+        //            t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau));
+        //            //アクティブにする
+        //            t.gameObject.SetActive(true);
+        //            isflag = true;
+        //            break;
+        //        }
 
-            if (!isflag)
-            {
-                //生成時にbulletsの子オブジェクトにする
-                Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau), bullets);
-            }
-        }
+        //    }
+        //    //非アクティブなオブジェクトがない場合新規生成
+
+        //    if (!isflag)
+        //    {
+        //        //生成時にbulletsの子オブジェクトにする
+        //        Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + kau), bullets);
+        //    }
+        //}
     }
 
     #endregion

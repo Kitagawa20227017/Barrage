@@ -63,9 +63,7 @@ public class MyScript : MonoBehaviour
         bullets = new Transform[_gameObject.Length];
         for(int i = 0; i < _gameObject.Length; i++)
         {
-
             bullets[i] = new GameObject(ppppp + i).transform;
-
         }
         for (int j = 0; j < _gameObject.Length; j++)
         {
@@ -91,18 +89,17 @@ public class MyScript : MonoBehaviour
             if(!isflag)
             {
                 _patrn = Random.Range(0, _gameObject.Length);
-                Debug.Log(_patrn);
                 isflag = true;
             }
             _nowtime += Time.deltaTime;
-            if (_nowtime >= _timer && _conut <= _conutBall)
+            if (_nowtime >= _timer && _conut < _conutBall)
             {
                 test_2(gameObject.transform.position);
                 _conut++;
                 _nowtime = 0;
             }
 
-            if (_conut > _conutBall)
+            if (_conut >= _conutBall)
             {
                 _nowTime = 0;
                 _conut = 0;
@@ -122,16 +119,18 @@ public class MyScript : MonoBehaviour
                 t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z));
                 //アクティブにする
                 t.gameObject.SetActive(true);
+
+                isflag = true;
                 break;
             }
             else
             {
-                isflag = true;
+                isflag = false;
             }
         }
         //非アクティブなオブジェクトがない場合新規生成
 
-        if (isflag)
+        if (!isflag)
         {
             //生成時にbulletsの子オブジェクトにする
             Instantiate(_gameObject[_patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z), bullets[_patrn]);
@@ -149,16 +148,17 @@ public class MyScript : MonoBehaviour
                     t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + kau));
                     //アクティブにする
                     t.gameObject.SetActive(true);
+                    isflag = true;
                     break;
                 }
                 else
                 {
-                    isflag = true;
+                    isflag = false;
                 }
             }
             //非アクティブなオブジェクトがない場合新規生成
 
-            if (isflag)
+            if (!isflag)
             {
                 //生成時にbulletsの子オブジェクトにする
                 Instantiate(_gameObject[_patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + kau), bullets[_patrn]);
@@ -177,16 +177,17 @@ public class MyScript : MonoBehaviour
                     t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau));
                     //アクティブにする
                     t.gameObject.SetActive(true);
+                    isflag = true;
                     break;
                 }
                 else
                 {
-                    isflag = true;
+                    isflag = false;
                 }
             }
             //非アクティブなオブジェクトがない場合新規生成
 
-            if (isflag)
+            if (!isflag)
             {
                 //生成時にbulletsの子オブジェクトにする
                 Instantiate(_gameObject[_patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau), bullets[_patrn]);

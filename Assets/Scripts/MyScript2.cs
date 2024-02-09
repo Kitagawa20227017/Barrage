@@ -88,19 +88,21 @@ public class MyScript2 : MonoBehaviour
     private void Update()
     {
         time += Time.deltaTime;
-        if (time >= _directionsTimer && Mathf.Round(_transform.eulerAngles.z) != _angle)
+        if (time >= _directionsTimer /*&& Mathf.Round(_transform.eulerAngles.z) != _angle*/)
         {
             _objAngleNow += _storageAnglSpeed * Time.deltaTime;
-            _transform.rotation = Quaternion.Euler(0, 0, _objAngle + _objAngleNow);
+            //_transform.rotation = Quaternion.Euler(0, 0, _objAngle + _objAngleNow);
+            //_transform.rotation = Quaternion.Euler(0, 0, _transform.eulerAngles.z + _objAngleNow);
         }
         _transform.Translate(_moveSpeed * Time.deltaTime, 0, 0);
     }
 
     private void OnBecameInvisible()
     {
-        _transform.rotation = Quaternion.Euler(0, 0, _objAngle);
+        // 初期化
         time = 0;
         _objAngleNow = 0;
+
         //画面外に行ったら非アクティブにする
         gameObject.SetActive(false);
     }
