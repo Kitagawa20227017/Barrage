@@ -34,8 +34,6 @@ public class PlayerMove : MonoBehaviour
     private const float PLAYER_MIN_POX_Y = 12.63f;
     private const float PLAYER_MAX_POX_Y = 12.63f;
 
-
-
     #endregion
 
     // プレイヤーの入力方向の格納場所
@@ -58,6 +56,7 @@ public class PlayerMove : MonoBehaviour
 
         #region 入力値の補正
 
+        // 横軸の移動
         if (_horizontal > 0)
         {
             _horizontal = PLUS;
@@ -71,6 +70,8 @@ public class PlayerMove : MonoBehaviour
             _horizontal = 0;
         }
 
+
+        // 縦軸の移動
         if (_vertical > 0)
         {
             _vertical = PLUS;

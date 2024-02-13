@@ -13,9 +13,6 @@ public class StraightLineMove : MonoBehaviour
     #region 変数  
 
     [SerializeField]
-    private float _a = 0f;
-
-    [SerializeField]
     private float _moveSpeed = 7.5f;
 
     private Transform _transform = default;
@@ -39,8 +36,7 @@ public class StraightLineMove : MonoBehaviour
     /// </summary>  
     void Start ()
     {
-        _transform = this.transform;
-        _transform.rotation = Quaternion.Euler(0, 0, _transform.eulerAngles.z + _a);  
+        _transform = this.transform; 
     }
 
     /// <summary>  

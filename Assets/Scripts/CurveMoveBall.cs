@@ -1,0 +1,131 @@
+// ---------------------------------------------------------  
+// CurveMoveBall.cs  
+//   
+// 曲がる弾のスクリプト
+// 
+// 作成日: 2024/2/6 
+// 作成者: 北川 稔明
+// ---------------------------------------------------------  
+using UnityEngine;
+using System.Collections;
+
+public class CurveMoveBall : MonoBehaviour
+{
+    #region 変数
+
+    // 角度が変わるまでの時間
+    [SerializeField]
+    private float _directionsTimer = 2f;
+
+    // どの角度まで変わるか
+    [SerializeField]
+    private int _angle = 90;
+
+    // 角度が変わるスピード
+    [SerializeField]
+    private int _angleMoveSpeed = 100;
+
+    // 移動速度
+    [SerializeField]
+    private float _moveSpeed = 5f;
+
+    // 角度が変わるスピードを変換して保存する用
+    private int _storageAnglSpeed = default;
+
+    // タイマー用
+    private float time = 0;
+
+    // 現在の角度
+    private float _objAngleNow = default;
+
+    // アクティブになった時の角度
+    private float _objAngle = default;
+
+    // transform格納用
+    private Transform _transform = default;
+
+    // アクティブ時の判定
+    private bool _isActiveObj = false;
+
+    // 曲がる向き
+    private enum RotationDirection
+    {
+        Right,
+        Left
+    }
+
+    // inspectorで設定できるようにする
+    [SerializeField,Header("曲がる向き")]
+    private RotationDirection _rotationDirection;
+
+    // RotationDirectionをstring変換しておく
+    private string _direction = default;
+
+    #endregion
+
+    #region メソッド  
+
+    /// <summary>  
+    /// 更新前処理  
+    /// </summary>  
+    void Start()
+    {
+        // 初期設定
+        _transform = this.transform;
+        _objAngle = _transform.eulerAngles.z;
+        _direction = _rotationDirection.ToString();
+
+        // 右に曲がるか左に曲がるかの判定
+        if (_direction == "Right")
+        {
+            _storageAnglSpeed = _angleMoveSpeed;
+        }
+        else if (_direction == "Left")
+        {
+            _storageAnglSpeed = _angleMoveSpeed * -1;
+        }
+    }
+
+    /// <summary>  
+    /// 更新処理  
+    /// </summary>  
+    private void Update()
+    {
+        // アクティブになったときに角度の記録
+        if(this.gameObject.activeSelf  && !_isActiveObj)
+        {
+            _objAngle = _transform.eulerAngles.z;
+
+            // 重複して更新しないようにする
+            _isActiveObj = true;
+        }
+
+        // 時間を測る
+        time += Time.deltaTime;
+
+        // 計測時間がタイマーを超えたら曲がり始める
+        if (time >= _directionsTimer)
+        {
+            _objAngleNow += _storageAnglSpeed * Time.deltaTime;
+            _transform.rotation = Quaternion.Euler(0, 0, _objAngle + _objAngleNow);
+        }
+        _transform.Translate(_moveSpeed * Time.deltaTime, 0, 0);
+    }
+
+
+    /// <summary>
+    /// 画面外処理
+    /// </summary>
+    private void OnBecameInvisible()
+    {
+        // 初期化
+        time = 0;
+        _objAngleNow = 0;
+        _isActiveObj = false;
+
+        // 画面外に行ったら非アクティブにする
+        gameObject.SetActive(false);
+    }
+    #endregion
+
+}

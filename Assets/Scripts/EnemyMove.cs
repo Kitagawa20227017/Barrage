@@ -11,21 +11,31 @@ public class EnemyMove : MonoBehaviour
 {
     #region 変数
 
-    [SerializeField]
-    private float timer = 2f;
+    [SerializeField,Header("曲がり始めるまでの時間")]
+    private float _curveTimer = 2f;
 
-    [SerializeField]
-    private int aa = 90;
-
-    [SerializeField]
+    [SerializeField,Header("敵の動くスピード")]
     private float _moveSpeed = 5f;
 
-    private bool flag = false;
-    private float time = 0;
+    // カメラ内に入ったかの判定
+    private bool _isInCamera = false;
+
+    // 
+    private float _timer = 0;
+
+    //
     private float n = 0;
-    private float a = 0;
+
+    //
+    private float _angleEnemy = default;
+
+    //
     private Transform _transform = default;
-    private int aaa = default ;
+
+    //
+    private int _curveDirections = default ;
+
+    //
     private string _direction = default;
 
     private enum RotationDirection
@@ -34,7 +44,7 @@ public class EnemyMove : MonoBehaviour
         Left
     }
 
-    [SerializeField]
+    [SerializeField,Header("曲がる方向")]
     private RotationDirection _rotationDirection;
 
     #endregion
@@ -50,15 +60,15 @@ public class EnemyMove : MonoBehaviour
     void Start()
     {
         _transform = this.transform;
-        a = _transform.eulerAngles.z;
+        _angleEnemy = _transform.eulerAngles.z;
         _direction = _rotationDirection.ToString();
         if (_direction == "Right")
         {
-            aaa = 120;
+            _curveDirections = 120;
         }
         else if(_direction == "Left")
         {
-            aaa = -120;
+            _curveDirections = -120;
         }
     }
 
@@ -67,20 +77,20 @@ public class EnemyMove : MonoBehaviour
     /// </summary>  
     private void Update()
     {
-        if (flag)
+        if (_isInCamera)
         {
-            time += Time.deltaTime;
-            //if (time >= timer && Mathf.Round(_transform.eulerAngles.z) != 90)
-            //{
-            //    n += aaa * Time.deltaTime;
-            //    _transform.rotation = Quaternion.Euler(0, 0, a + n);
-            //}
+            _timer += Time.deltaTime;
+            if (_timer >= _curveTimer && Mathf.Round(_transform.eulerAngles.z) != 90)
+            {
+                n += _curveDirections * Time.deltaTime;
+                _transform.rotation = Quaternion.Euler(0, 0, _angleEnemy + n);
+            }
             _transform.Translate(_moveSpeed * Time.deltaTime, 0, 0);
         }
     }
     private void OnBecameVisible()
     {
-        flag = true;
+        _isInCamera = true;
     }
 
     private void OnBecameInvisible()
