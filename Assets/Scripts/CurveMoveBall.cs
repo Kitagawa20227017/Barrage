@@ -109,7 +109,7 @@ public class CurveMoveBall : MonoBehaviour
             _objAngleNow += _storageAnglSpeed * Time.deltaTime;
             _transform.rotation = Quaternion.Euler(0, 0, _objAngle + _objAngleNow);
         }
-        _transform.Translate(_moveSpeed * Time.deltaTime, 0, 0);
+        _transform.Translate(0, -_moveSpeed * Time.deltaTime, 0);
     }
 
 

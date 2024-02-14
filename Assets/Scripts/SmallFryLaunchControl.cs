@@ -15,8 +15,8 @@ public class SmallFryLaunchControl : MonoBehaviour
 
     #region const定数 
 
-    private const int AA = 1;
-
+    // 最初に生成する弾の数
+    private const int INITIAL_INSTANTIATE = 30;
 
     #endregion
 
@@ -53,12 +53,6 @@ public class SmallFryLaunchControl : MonoBehaviour
     // 初期角度の保存先
     private float _initialAngle = default;
 
-    // 
-    float kau = default;
-
-    #endregion
-
-    #region プロパティ  
     #endregion
 
     #region メソッド  
@@ -70,9 +64,9 @@ public class SmallFryLaunchControl : MonoBehaviour
     {
         _initialAngle = transform.eulerAngles.z;
         bullets = new GameObject("SmallFryBullets").transform;
-        for (int i = 0; i < _conutBall * (_ballQuantity + 1) * 2; i++)
+        for (int i = 0; i < INITIAL_INSTANTIATE; i++)
         {
-            Instantiate(_gameObject, gameObject.transform.position, Quaternion.Euler(0, 0, 270), bullets);
+            Instantiate(_gameObject, gameObject.transform.position, Quaternion.Euler(0, 0, 0), bullets);
         }
 
         foreach(Transform t in bullets)
@@ -125,25 +119,27 @@ public class SmallFryLaunchControl : MonoBehaviour
     /// <param name="pos">敵の現在位置</param>
     private void ObjectPool(Vector3 pos)
     {
+        float settingAngle = default;
+        bool isActive = false;
+
         #region 正面の弾
 
-        bool isflag = false;
         foreach (Transform t in bullets)
         {
             if (!t.gameObject.activeSelf)
             {
-                isflag = false;
+                isActive = false;
                 //非アクティブなオブジェクトの位置と回転を設定
                 t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, this.transform.eulerAngles.z));
                 //アクティブにする
                 t.gameObject.SetActive(true);
-                isflag = true;
+                isActive = true;
                 break;
             }
         }
         //非アクティブなオブジェクトがない場合新規生成
 
-        if (!isflag)
+        if (!isActive)
         {
             //生成時にbulletsの子オブジェクトにする
             Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z), bullets);
@@ -155,26 +151,26 @@ public class SmallFryLaunchControl : MonoBehaviour
 
         for (int i = 1; i <= _ballQuantity; i++)
         {
-            isflag = false;
-            kau = _ballInterval * i;
+            isActive = false;
+             settingAngle = _ballInterval * i;
             foreach (Transform t in bullets)
             {
                 if (!t.gameObject.activeSelf)
                 {
                     // 非アクティブなオブジェクトの位置と回転を設定
-                    t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, this.transform.eulerAngles.z + kau));
+                    t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, this.transform.eulerAngles.z + settingAngle));
                     // アクティブにする
                     t.gameObject.SetActive(true);
-                    isflag = true;
+                    isActive = true;
                     break;
                 }
             }
 
             // 非アクティブなオブジェクトがない場合新規生成
-            if (!isflag)
+            if (!isActive)
             {
-                //生成時にbulletsの子オブジェクトにする
-                Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + kau), bullets);
+                // 生成時にbulletsの子オブジェクトにする
+                Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + settingAngle), bullets);
             }
         }
 
@@ -184,27 +180,27 @@ public class SmallFryLaunchControl : MonoBehaviour
 
         for (int i = 1; i <= _ballQuantity; i++)
         {
-            isflag = false;
-            kau = _ballInterval * i;
+            isActive = false;
+            settingAngle = _ballInterval * i;
             foreach (Transform t in bullets)
             {
                 if (!t.gameObject.activeSelf)
                 {
-                    //非アクティブなオブジェクトの位置と回転を設定
-                    t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau));
-                    //アクティブにする
+                    // 非アクティブなオブジェクトの位置と回転を設定
+                    t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - settingAngle));
+                    // アクティブにする
                     t.gameObject.SetActive(true);
-                    isflag = true;
+                    isActive = true;
                     break;
                 }
 
             }
-            //非アクティブなオブジェクトがない場合新規生成
 
-            if (!isflag)
+            // 非アクティブなオブジェクトがない場合新規生成
+            if (!isActive)
             {
-                //生成時にbulletsの子オブジェクトにする
-                Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau), bullets);
+                // 生成時にbulletsの子オブジェクトにする
+                Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - settingAngle), bullets);
             }
         }
 

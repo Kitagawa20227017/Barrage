@@ -42,17 +42,7 @@ public class MyScript : MonoBehaviour
 
     #endregion
 
-    #region プロパティ  
-    #endregion
-
     #region メソッド  
-
-    /// <summary>  
-    /// 初期化処理  
-    /// </summary>  
-    void Awake()
-    {
-    }
 
     /// <summary>  
     /// 更新前処理  
@@ -61,15 +51,17 @@ public class MyScript : MonoBehaviour
     {
         _angle = transform.eulerAngles.z;
         bullets = new Transform[_gameObject.Length];
-        for(int i = 0; i < _gameObject.Length; i++)
+        for (int i = 0; i < _gameObject.Length; i++)
         {
             bullets[i] = new GameObject(ppppp + i).transform;
-        }
-        for (int j = 0; j < _gameObject.Length; j++)
-        {
-            for (int i = 0; i < 100; i++)
+            for (int j = 0; j < 100; j++)
             {
-                Instantiate(_gameObject[j], gameObject.transform.position, Quaternion.Euler(0, 0, -90), bullets[j]);
+                Instantiate(_gameObject[i], gameObject.transform.position, Quaternion.Euler(0, 0, -90), bullets[i]);
+            }
+
+            foreach(Transform ball in bullets[i])
+            {
+                ball.gameObject.SetActive(false);
             }
         }
     }
@@ -94,7 +86,7 @@ public class MyScript : MonoBehaviour
             _nowtime += Time.deltaTime;
             if (_nowtime >= _timer && _conut < _conutBall)
             {
-                test_2(gameObject.transform.position);
+                ObjectPool(gameObject.transform.position);
                 _conut++;
                 _nowtime = 0;
             }
@@ -108,16 +100,16 @@ public class MyScript : MonoBehaviour
         }
     }
 
-    private void test_2(Vector3 pos)
+    private void ObjectPool(Vector3 pos)
     {
         bool isflag = false;
         foreach (Transform t in bullets[_patrn])
         {
             if (!t.gameObject.activeSelf)
             {
-                //非アクティブなオブジェクトの位置と回転を設定
+                // 非アクティブなオブジェクトの位置と回転を設定
                 t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z));
-                //アクティブにする
+                // アクティブにする
                 t.gameObject.SetActive(true);
 
                 isflag = true;
@@ -128,11 +120,11 @@ public class MyScript : MonoBehaviour
                 isflag = false;
             }
         }
-        //非アクティブなオブジェクトがない場合新規生成
 
+        // 非アクティブなオブジェクトがない場合新規生成
         if (!isflag)
         {
-            //生成時にbulletsの子オブジェクトにする
+            // 生成時にbulletsの子オブジェクトにする
             Instantiate(_gameObject[_patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z), bullets[_patrn]);
         }
 
@@ -144,9 +136,9 @@ public class MyScript : MonoBehaviour
             {
                 if (!t.gameObject.activeSelf)
                 {
-                    //非アクティブなオブジェクトの位置と回転を設定
+                    // 非アクティブなオブジェクトの位置と回転を設定
                     t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + kau));
-                    //アクティブにする
+                    // アクティブにする
                     t.gameObject.SetActive(true);
                     isflag = true;
                     break;
@@ -156,11 +148,11 @@ public class MyScript : MonoBehaviour
                     isflag = false;
                 }
             }
-            //非アクティブなオブジェクトがない場合新規生成
 
+            // 非アクティブなオブジェクトがない場合新規生成
             if (!isflag)
             {
-                //生成時にbulletsの子オブジェクトにする
+                // 生成時にbulletsの子オブジェクトにする
                 Instantiate(_gameObject[_patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + kau), bullets[_patrn]);
             }
         }
@@ -173,9 +165,9 @@ public class MyScript : MonoBehaviour
             {
                 if (!t.gameObject.activeSelf)
                 {
-                    //非アクティブなオブジェクトの位置と回転を設定
+                    // 非アクティブなオブジェクトの位置と回転を設定
                     t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau));
-                    //アクティブにする
+                    // アクティブにする
                     t.gameObject.SetActive(true);
                     isflag = true;
                     break;
@@ -185,8 +177,8 @@ public class MyScript : MonoBehaviour
                     isflag = false;
                 }
             }
-            //非アクティブなオブジェクトがない場合新規生成
 
+            // 非アクティブなオブジェクトがない場合新規生成
             if (!isflag)
             {
                 //生成時にbulletsの子オブジェクトにする

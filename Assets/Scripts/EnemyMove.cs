@@ -1,5 +1,5 @@
 // ---------------------------------------------------------  
-// MyScript4.cs  
+// EnemyMove.cs  
 //   
 // 作成日:  
 // 作成者:  
@@ -77,25 +77,27 @@ public class EnemyMove : MonoBehaviour
     /// </summary>  
     private void Update()
     {
+        // カメラ内に入っているときのみ動く
         if (_isInCamera)
         {
             _timer += Time.deltaTime;
-            if (_timer >= _curveTimer && Mathf.Round(_transform.eulerAngles.z) != 90)
+            if (_timer >= _curveTimer && Mathf.Round(_transform.eulerAngles.z) != 180)
             {
                 n += _curveDirections * Time.deltaTime;
                 _transform.rotation = Quaternion.Euler(0, 0, _angleEnemy + n);
             }
-            _transform.Translate(_moveSpeed * Time.deltaTime, 0, 0);
+            _transform.Translate(0, -_moveSpeed * Time.deltaTime, 0);
         }
     }
     private void OnBecameVisible()
     {
+        // カメラ内に入ったとき
         _isInCamera = true;
     }
 
     private void OnBecameInvisible()
     {
-        //画面外に行ったら非アクティブにする
+        // 画面外に行ったら非アクティブにする
         gameObject.SetActive(false);
     }
 
