@@ -1,7 +1,7 @@
 // ---------------------------------------------------------  
 // SmallFryLaunchControl.cs  
 //   
-// 敵の弾発射スクリプト
+// 敵の弾発射処理
 //
 // 作成日:  2024/2/2
 // 作成者:  北川 稔明
@@ -38,7 +38,7 @@ public class SmallFryLaunchControl : MonoBehaviour
     [SerializeField, Range(0, 100), Header("弾の数")]
     private int _conutBall = 5;
 
-    // 弾の親オブジェクトのトランスフォーム
+    // 弾の親オブジェクトのTransform
     private Transform bullets = default;
     
     // 弾を撃った回数のカウント

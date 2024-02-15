@@ -112,6 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a37aeb884024f84597559fe1206eedf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _invincibleTime: 2
+  _classification: 1
 --- !u!50 &3780403257540056172
 Rigidbody2D:
   serializedVersion: 4
@@ -183,7 +185,7 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0, y: 0.5773587}
-      - {x: -0.5, y: -0.28866667}
-      - {x: 0.5, y: -0.28866667}
+    - - {x: -0.004962651, y: 0.5178094}
+      - {x: -0.57294494, y: -0.41233155}
+      - {x: 0.54317045, y: -0.4158021}
   m_UseDelaunayMesh: 0

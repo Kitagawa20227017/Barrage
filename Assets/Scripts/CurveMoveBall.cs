@@ -1,7 +1,7 @@
 // ---------------------------------------------------------  
 // CurveMoveBall.cs  
 //   
-// 曲がる弾のスクリプト
+// 曲がる弾の処理
 // 
 // 作成日: 2024/2/6 
 // 作成者: 北川 稔明
@@ -12,6 +12,14 @@ using System.Collections;
 public class CurveMoveBall : MonoBehaviour
 {
     #region 変数
+
+    #region const定数
+
+    // 曲がる方向の判定用
+    private const string LEFT = "Left";
+    private const string RIGHT = "Right";
+
+    #endregion
 
     // 角度が変わるまでの時間
     [SerializeField]
@@ -29,6 +37,9 @@ public class CurveMoveBall : MonoBehaviour
     [SerializeField]
     private float _moveSpeed = 5f;
 
+    // transform格納用
+    private Transform _transform = default;
+
     // 角度が変わるスピードを変換して保存する用
     private int _storageAnglSpeed = default;
 
@@ -40,9 +51,6 @@ public class CurveMoveBall : MonoBehaviour
 
     // アクティブになった時の角度
     private float _objAngle = default;
-
-    // transform格納用
-    private Transform _transform = default;
 
     // アクティブ時の判定
     private bool _isActiveObj = false;
@@ -56,7 +64,7 @@ public class CurveMoveBall : MonoBehaviour
 
     // inspectorで設定できるようにする
     [SerializeField,Header("曲がる向き")]
-    private RotationDirection _rotationDirection;
+    private RotationDirection _rotationDirection = default;
 
     // RotationDirectionをstring変換しておく
     private string _direction = default;
@@ -109,6 +117,8 @@ public class CurveMoveBall : MonoBehaviour
             _objAngleNow += _storageAnglSpeed * Time.deltaTime;
             _transform.rotation = Quaternion.Euler(0, 0, _objAngle + _objAngleNow);
         }
+
+        // 前に進む
         _transform.Translate(0, -_moveSpeed * Time.deltaTime, 0);
     }
 
