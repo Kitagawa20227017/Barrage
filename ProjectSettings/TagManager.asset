@@ -4,17 +4,17 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ball
   - PlayerBall
-  - Enemy
+  - EnemyBall
+  - Ball
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
+  - Enemy
   - 
   - 
   - 

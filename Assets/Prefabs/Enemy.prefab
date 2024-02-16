@@ -13,9 +13,11 @@ GameObject:
   - component: {fileID: 6613550075045246813}
   - component: {fileID: 1856540272737735418}
   - component: {fileID: 333061658281039056}
+  - component: {fileID: 7488029404416740751}
   - component: {fileID: 3461268384669926018}
   - component: {fileID: -4073361455351166299}
-  m_Layer: 0
+  - component: {fileID: 4365552222809451780}
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 5
   m_Sprite: {fileID: -1147401495359466748, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -134,8 +136,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a37aeb884024f84597559fe1206eedf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _invincibleTime: 2
-  _classification: 1
+  _classification: 0
+--- !u!114 &7488029404416740751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3392993929418181789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140c6d98348e2df41b80d409189db64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!60 &3461268384669926018
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -211,3 +224,24 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &4365552222809451780
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3392993929418181789}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ddc85b5467bc5d142a6785a0a5cf5610, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

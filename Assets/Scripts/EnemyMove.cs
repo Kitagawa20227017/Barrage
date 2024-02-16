@@ -78,6 +78,8 @@ public class EnemyMove : MonoBehaviour
         _transform = this.transform;
         _angleEnemy = _transform.eulerAngles.z;
         _direction = _rotationDirection.ToString();
+
+        // 曲がる方向の決定
         if (_direction == RIGHT)
         {
             _curveDirections = ANGLE_SPEED_RIGHT;

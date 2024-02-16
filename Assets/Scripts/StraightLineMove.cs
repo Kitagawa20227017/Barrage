@@ -82,6 +82,11 @@ public class StraightLineMove : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        gameObject.SetActive(false);
+    }
+
     #endregion
 
 }

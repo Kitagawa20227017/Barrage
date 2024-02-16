@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2847029597939438404}
   - component: {fileID: 407306031314737006}
   - component: {fileID: 6171291448449765094}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PlayerBall
   m_TagString: PlayerBall
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.75, y: 1.75, z: 1.75}
+  m_LocalScale: {x: 1.125, y: 1.125, z: 1.125}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b96fe10ad01e7a4db4dd27d83cc8892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 7.5
-  _direction: 0
+  _moveSpeed: 9
+  _direction: 1
 --- !u!70 &6171291448449765094
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

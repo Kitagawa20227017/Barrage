@@ -39,7 +39,7 @@ public class SmallFryLaunchControl : MonoBehaviour
     private int _conutBall = 5;
 
     // 弾の親オブジェクトのTransform
-    private Transform bullets = default;
+    private Transform _bullets = default;
     
     // 弾を撃った回数のカウント
     private int _conut = 0;
@@ -53,6 +53,9 @@ public class SmallFryLaunchControl : MonoBehaviour
     // 初期角度の保存先
     private float _initialAngle = default;
 
+    // カメラ内に入ったかの判定
+    private bool _isInCamera = false;
+
     #endregion
 
     #region メソッド  
@@ -63,15 +66,15 @@ public class SmallFryLaunchControl : MonoBehaviour
     void Start()
     {
         _initialAngle = transform.eulerAngles.z;
-        bullets = new GameObject("SmallFryBullets").transform;
+        _bullets = new GameObject("SmallFryBullets").transform;
         for (int i = 0; i < INITIAL_INSTANTIATE; i++)
         {
-            Instantiate(_gameObject, gameObject.transform.position, Quaternion.Euler(0, 0, 0), bullets);
+            Instantiate(_gameObject, gameObject.transform.position, Quaternion.Euler(0, 0, 0), _bullets);
         }
 
-        foreach(Transform t in bullets)
+        foreach(Transform bulletsTrans in _bullets)
         {
-            t.gameObject.SetActive(false);
+            bulletsTrans.gameObject.SetActive(false);
         }
     }
 
@@ -80,6 +83,11 @@ public class SmallFryLaunchControl : MonoBehaviour
     /// </summary>  
     void Update()
     {
+
+        if(!_isInCamera)
+        {
+            return;
+        }
 
         // 角度が変わったとき弾を撃たない
         if(Mathf.Round(transform.eulerAngles.z) != _initialAngle)
@@ -114,6 +122,15 @@ public class SmallFryLaunchControl : MonoBehaviour
     }
 
     /// <summary>
+    /// 画面内処理
+    /// </summary>
+    private void OnBecameVisible()
+    {
+        // カメラ内に入ったとき
+        _isInCamera = true;
+    }
+
+    /// <summary>
     /// 弾の生成(オブジェクトプール)
     /// </summary>
     /// <param name="pos">敵の現在位置</param>
@@ -124,25 +141,24 @@ public class SmallFryLaunchControl : MonoBehaviour
 
         #region 正面の弾
 
-        foreach (Transform t in bullets)
+        foreach (Transform bulletsTrans in _bullets)
         {
-            if (!t.gameObject.activeSelf)
+            if (!bulletsTrans.gameObject.activeSelf)
             {
                 isActive = false;
                 //非アクティブなオブジェクトの位置と回転を設定
-                t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, this.transform.eulerAngles.z));
+                bulletsTrans.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, this.transform.eulerAngles.z));
                 //アクティブにする
-                t.gameObject.SetActive(true);
+                bulletsTrans.gameObject.SetActive(true);
                 isActive = true;
                 break;
             }
         }
-        //非アクティブなオブジェクトがない場合新規生成
 
+        // 非アクティブなオブジェクトがない場合新規生成
         if (!isActive)
         {
-            //生成時にbulletsの子オブジェクトにする
-            Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z), bullets);
+            Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z), _bullets);
         }
 
         #endregion
@@ -153,14 +169,14 @@ public class SmallFryLaunchControl : MonoBehaviour
         {
             isActive = false;
              settingAngle = _ballInterval * i;
-            foreach (Transform t in bullets)
+            foreach (Transform bulletsTrans in _bullets)
             {
-                if (!t.gameObject.activeSelf)
+                if (!bulletsTrans.gameObject.activeSelf)
                 {
                     // 非アクティブなオブジェクトの位置と回転を設定
-                    t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, this.transform.eulerAngles.z + settingAngle));
+                    bulletsTrans.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, this.transform.eulerAngles.z + settingAngle));
                     // アクティブにする
-                    t.gameObject.SetActive(true);
+                    bulletsTrans.gameObject.SetActive(true);
                     isActive = true;
                     break;
                 }
@@ -169,8 +185,7 @@ public class SmallFryLaunchControl : MonoBehaviour
             // 非アクティブなオブジェクトがない場合新規生成
             if (!isActive)
             {
-                // 生成時にbulletsの子オブジェクトにする
-                Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + settingAngle), bullets);
+                Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + settingAngle), _bullets);
             }
         }
 
@@ -182,14 +197,14 @@ public class SmallFryLaunchControl : MonoBehaviour
         {
             isActive = false;
             settingAngle = _ballInterval * i;
-            foreach (Transform t in bullets)
+            foreach (Transform bulletsTrans in _bullets)
             {
-                if (!t.gameObject.activeSelf)
+                if (!bulletsTrans.gameObject.activeSelf)
                 {
                     // 非アクティブなオブジェクトの位置と回転を設定
-                    t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - settingAngle));
+                    bulletsTrans.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - settingAngle));
                     // アクティブにする
-                    t.gameObject.SetActive(true);
+                    bulletsTrans.gameObject.SetActive(true);
                     isActive = true;
                     break;
                 }
@@ -199,13 +214,13 @@ public class SmallFryLaunchControl : MonoBehaviour
             // 非アクティブなオブジェクトがない場合新規生成
             if (!isActive)
             {
-                // 生成時にbulletsの子オブジェクトにする
-                Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - settingAngle), bullets);
+                Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - settingAngle), _bullets);
             }
         }
 
         #endregion
     }
+
 
     #endregion
 

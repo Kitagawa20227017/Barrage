@@ -136,6 +136,12 @@ public class CurveMoveBall : MonoBehaviour
         // 画面外に行ったら非アクティブにする
         gameObject.SetActive(false);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        gameObject.SetActive(false);
+    }
+
     #endregion
 
 }
