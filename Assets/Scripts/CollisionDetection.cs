@@ -7,7 +7,6 @@
 // 作成者: 北川 稔明 
 // ---------------------------------------------------------  
 using UnityEngine;
-using System.Collections;
 
 public class CollisionDetection : MonoBehaviour
 {
@@ -39,6 +38,7 @@ public class CollisionDetection : MonoBehaviour
     /// </summary>  
     private void Start ()
     {
+        // 初期設定
         _selection = _classification.ToString();
         damaged = this.gameObject.GetComponent<IDamaged>();
     }
@@ -49,8 +49,10 @@ public class CollisionDetection : MonoBehaviour
     /// <param name="collision">当たった弾</param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // 特定のタグのオブジェクトが当たったとき
         if(collision.tag == _selection)
         {
+            // ダメージ処理の呼び出し
             damaged.IsHitJudgment();
         }
     }

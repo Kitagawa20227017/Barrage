@@ -1,12 +1,13 @@
 // ---------------------------------------------------------  
-// MyScript.cs  
+// BossLaunchControl.cs  
 //   
 // 作成日:  
 // 作成者:  
 // ---------------------------------------------------------  
 using UnityEngine;
+using System.Collections;
 
-public class MyScript : MonoBehaviour
+public class BossLaunchControl_Test : MonoBehaviour
 {
 
     #region 変数  
@@ -14,28 +15,20 @@ public class MyScript : MonoBehaviour
     [SerializeField]
     private GameObject[] _gameObject;
 
-    [SerializeField, Range(0, 90), Header("斜めの弾の数(左右対称)")]
-    private int s = 0;
-
-    [SerializeField, Range(0, 90f), Header("弾と弾の間隔")]
-    private float sa = 0;
-
-    [SerializeField, Range(0, 100), Header("弾の数")]
-    private int _conutBall = 5;
-
-    [SerializeField, Range(0, 10f), Header("弾の発射間隔")]
-    private float _timer = 0.25f;
-
-    [SerializeField]
-    private float _time = 0.25f;
-
     private Transform[] bullets;
+
+    private int s = 0;
+    private int _countBall = 5;
     private int _conut = 0;
+    private int _patrn = 0;
+
+    private float _timer = 0.25f;
+    private float _time = 0.25f;
+    private float sa = 0;
     private float _nowTime = 0;
     private float _nowtime = 0;
     private float _angle = default;
 
-    private int _patrn = 0;
     private string ppppp = "BossBullets";
 
     private bool isflag = false;
@@ -56,10 +49,10 @@ public class MyScript : MonoBehaviour
             bullets[i] = new GameObject(ppppp + i).transform;
             for (int j = 0; j < 100; j++)
             {
-                Instantiate(_gameObject[i], gameObject.transform.position, Quaternion.Euler(0, 0, -90), bullets[i]);
+                Instantiate(_gameObject[i], gameObject.transform.position, Quaternion.Euler(0, 0, 0), bullets[i]);
             }
 
-            foreach(Transform ball in bullets[i])
+            foreach (Transform ball in bullets[i])
             {
                 ball.gameObject.SetActive(false);
             }
@@ -71,27 +64,23 @@ public class MyScript : MonoBehaviour
     /// </summary>  
     void Update()
     {
-        if (Mathf.Round(transform.eulerAngles.z) != _angle)
-        {
-            return;
-        }
         _nowTime += Time.deltaTime;
         if (_nowTime >= _time)
         {
-            if(!isflag)
+            if (!isflag)
             {
                 _patrn = Random.Range(0, _gameObject.Length);
                 isflag = true;
             }
             _nowtime += Time.deltaTime;
-            if (_nowtime >= _timer && _conut < _conutBall)
+            if (_nowtime >= _timer && _conut < _countBall)
             {
                 ObjectPool(gameObject.transform.position);
                 _conut++;
                 _nowtime = 0;
             }
 
-            if (_conut >= _conutBall)
+            if (_conut >= _countBall)
             {
                 _nowTime = 0;
                 _conut = 0;
@@ -100,7 +89,7 @@ public class MyScript : MonoBehaviour
         }
     }
 
-    private void ObjectPool(Vector3 pos)
+    public void ObjectPool(Vector3 pos)
     {
         bool isflag = false;
         foreach (Transform t in bullets[_patrn])

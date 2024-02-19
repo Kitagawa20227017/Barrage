@@ -29,7 +29,7 @@ public class IsHitPlayer : MonoBehaviour,IDamaged
     private Color _targetColor = default;
 
     // 残機
-    private int _remainingLives = 5;
+    private int _playerStocks = 5;
 
     // 弾が当たったか
     private bool _isHit = false;
@@ -75,7 +75,7 @@ public class IsHitPlayer : MonoBehaviour,IDamaged
             _targetColor.a = repeatValue >= _cycle * 0.5f ? 1 : 0;
             _target.color = _targetColor;
 
-            if(_timer >= IS_HIT_TIMER)
+            if (_timer >= IS_HIT_TIMER)
             {
                 _targetColor.a = COLOE_ALPHA;
                 _target.color = _targetColor;
@@ -87,7 +87,7 @@ public class IsHitPlayer : MonoBehaviour,IDamaged
 
     public void IsHitJudgment()
     {
-        if(_remainingLives <= 0)
+        if(_playerStocks < 0)
         {
             Debug.Log("Game Over");
             return;
@@ -95,7 +95,7 @@ public class IsHitPlayer : MonoBehaviour,IDamaged
 
         if(!_isHit)
         {
-            _remainingLives--;
+            _playerStocks--;
             _isHit = true;
         }
     }

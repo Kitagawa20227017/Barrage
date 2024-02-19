@@ -7,7 +7,6 @@
 // 作成者:  北川 稔明
 // ---------------------------------------------------------  
 using UnityEngine;
-using System.Collections;
 
 public class EnemyMove : MonoBehaviour
 {

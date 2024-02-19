@@ -1,11 +1,12 @@
 // ---------------------------------------------------------  
 // BossLaunchControl.cs  
 //   
-// 作成日:  
-// 作成者:  
+// ボスの攻撃処理
+//
+// 作成日:  2024/2/9
+// 作成者:  北川 稔明
 // ---------------------------------------------------------  
 using UnityEngine;
-using System.Collections;
 
 public class BossLaunchControl : MonoBehaviour
 {
@@ -13,54 +14,33 @@ public class BossLaunchControl : MonoBehaviour
     #region 変数  
 
     [SerializeField]
-    private GameObject _gameObject;
+    private GameObject[] _gameObject;
 
-    [SerializeField, Range(0, 90), Header("斜めの弾の数(左右対称)")]
-    private int s = 0;
+    private Transform[] bullets;
+    private string ppppp = "BossBullets";
 
-    [SerializeField, Range(0, 90f), Header("弾と弾の間隔")]
-    private float sa = 0;
-
-    [SerializeField, Range(0, 100), Header("弾の数")]
-    private int _conutBall = 5;
-
-    [SerializeField, Range(0, 10f), Header("弾の発射間隔")]
-    private float _timer = 0.25f;
-
-    [SerializeField]
-    private float _time = 0.25f;
-
-    private Transform bullets;
-    private int _conut = 0;
-    private float _nowTime = 0;
-    private float _nowtime = 0;
-    private bool isflag = false;
-    private float _angle = default;
-
-    #endregion
-
-    #region プロパティ  
     #endregion
 
     #region メソッド  
-
-    /// <summary>  
-    /// 初期化処理  
-    /// </summary>  
-    void Awake()
-    {
-    }
 
     /// <summary>  
     /// 更新前処理  
     /// </summary>  
     void Start()
     {
-        _angle = transform.eulerAngles.z;
-        bullets = new GameObject("BossBullets").transform;
-        for (int i = 0; i < 100; i++)
+        bullets = new Transform[_gameObject.Length];
+        for (int i = 0; i < _gameObject.Length; i++)
         {
-            Instantiate(_gameObject, gameObject.transform.position, Quaternion.Euler(0, 0, -90), bullets);
+            bullets[i] = new GameObject(ppppp + i).transform;
+            for (int j = 0; j < 100; j++)
+            {
+                Instantiate(_gameObject[i], gameObject.transform.position, Quaternion.Euler(0, 0, 0), bullets[i]);
+            }
+
+            foreach(Transform ball in bullets[i])
+            {
+                ball.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -69,108 +49,92 @@ public class BossLaunchControl : MonoBehaviour
     /// </summary>  
     void Update()
     {
-        if (Mathf.Round(transform.eulerAngles.z) != _angle)
-        {
-            return;
-        }
-        _nowTime += Time.deltaTime;
-        if (_nowTime >= _time)
-        {
-            _nowtime += Time.deltaTime;
-            if (_nowtime >= _timer && _conut <= _conutBall)
-            {
-                test_2(gameObject.transform.position);
-                _conut++;
-                _nowtime = 0;
-            }
-
-            if (_conut > _conutBall)
-            {
-                _nowTime = 0;
-                _conut = 0;
-            }
-        }
+        
     }
 
-    private void test_2(Vector3 pos)
+    public void ObjectPool(Vector3 pos,int qty,float angle,int patrn)
     {
         bool isflag = false;
-        foreach (Transform t in bullets)
+        foreach (Transform t in bullets[patrn])
         {
             if (!t.gameObject.activeSelf)
             {
-                //非アクティブなオブジェクトの位置と回転を設定
+                // 非アクティブなオブジェクトの位置と回転を設定
                 t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z));
-                //アクティブにする
+                // アクティブにする
                 t.gameObject.SetActive(true);
+
+                isflag = true;
                 break;
             }
             else
             {
-                isflag = true;
+                isflag = false;
             }
         }
-        //非アクティブなオブジェクトがない場合新規生成
 
-        if (isflag)
+        // 非アクティブなオブジェクトがない場合新規生成
+        if (!isflag)
         {
-            //生成時にbulletsの子オブジェクトにする
-            Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z), bullets);
+            // 生成時にbulletsの子オブジェクトにする
+            Instantiate(_gameObject[patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z), bullets[patrn]);
         }
 
-        for (int i = 1; i <= s; i++)
+        for (int i = 1; i <= qty; i++)
         {
             isflag = false;
-            float kau = sa * i;
-            foreach (Transform t in bullets)
+            float kau = angle * i;
+            foreach (Transform t in bullets[patrn])
             {
                 if (!t.gameObject.activeSelf)
                 {
-                    //非アクティブなオブジェクトの位置と回転を設定
+                    // 非アクティブなオブジェクトの位置と回転を設定
                     t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + kau));
-                    //アクティブにする
+                    // アクティブにする
                     t.gameObject.SetActive(true);
+                    isflag = true;
                     break;
                 }
                 else
                 {
-                    isflag = true;
+                    isflag = false;
                 }
             }
-            //非アクティブなオブジェクトがない場合新規生成
 
-            if (isflag)
+            // 非アクティブなオブジェクトがない場合新規生成
+            if (!isflag)
             {
-                //生成時にbulletsの子オブジェクトにする
-                Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + kau), bullets);
+                // 生成時にbulletsの子オブジェクトにする
+                Instantiate(_gameObject[patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + kau), bullets[patrn]);
             }
         }
 
-        for (int i = 1; i <= s; i++)
+        for (int i = 1; i <= qty; i++)
         {
             isflag = false;
-            float kau = sa * i;
-            foreach (Transform t in bullets)
+            float kau = angle * i;
+            foreach (Transform t in bullets[patrn])
             {
                 if (!t.gameObject.activeSelf)
                 {
-                    //非アクティブなオブジェクトの位置と回転を設定
+                    // 非アクティブなオブジェクトの位置と回転を設定
                     t.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau));
-                    //アクティブにする
+                    // アクティブにする
                     t.gameObject.SetActive(true);
+                    isflag = true;
                     break;
                 }
                 else
                 {
-                    isflag = true;
+                    isflag = false;
                 }
             }
-            //非アクティブなオブジェクトがない場合新規生成
 
-            if (isflag)
+            // 非アクティブなオブジェクトがない場合新規生成
+            if (!isflag)
             {
                 //生成時にbulletsの子オブジェクトにする
-                Instantiate(_gameObject, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau), bullets);
+                Instantiate(_gameObject[patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau), bullets[patrn]);
             }
         }
     }

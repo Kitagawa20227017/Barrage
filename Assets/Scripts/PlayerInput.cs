@@ -1,5 +1,5 @@
 // ---------------------------------------------------------  
-// PlayerMove.cs  
+// PlayerInput.cs  
 //   
 // プレイヤーの入力処理
 //
@@ -16,7 +16,7 @@ public class PlayerInput : MonoBehaviour
     #region const変数
 
     // 最初に生成する弾の数
-    private const int INITIAL_INSTANTIATE = 30;
+    private const int INITIAL_INSTANTIATE = 15;
 
     // 横軸の移動量   
     private const float PLUS_HORIZONMOVE = 5f;
@@ -140,8 +140,8 @@ public class PlayerInput : MonoBehaviour
 
             if (gameObject.transform.localPosition.x < PLAYER_MAX_POX_X)
             {
-                gameObject.transform.position = 
-                    new Vector3(gameObject.transform.position.x + (PLUS_HORIZONMOVE * Time.deltaTime), gameObject.transform.position.y,transform.localPosition.z);
+                gameObject.transform.localPosition = 
+                    new Vector3(gameObject.transform.localPosition.x + (PLUS_HORIZONMOVE * Time.deltaTime), gameObject.transform.localPosition.y, transform.localPosition.z);
             }
         }
         else if (_horizontal == MINUS)
@@ -152,8 +152,8 @@ public class PlayerInput : MonoBehaviour
 
             if (gameObject.transform.localPosition.x > PLAYER_MIN_POX_X)
             {
-                gameObject.transform.position = 
-                    new Vector3(gameObject.transform.localPosition.x + (MINUS_HORIZONMOVE * Time.deltaTime), gameObject.transform.position.y, transform.localPosition.z);
+                gameObject.transform.localPosition = 
+                    new Vector3(gameObject.transform.localPosition.x + (MINUS_HORIZONMOVE * Time.deltaTime), gameObject.transform.localPosition.y, transform.localPosition.z);
             }
         }
         else if (_horizontal == 0)
@@ -162,7 +162,8 @@ public class PlayerInput : MonoBehaviour
             _playerAnimator.SetBool("isLeft", false);
             _playerAnimator.SetBool("isRight", false);
 
-            gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, transform.localPosition.z);
+            gameObject.transform.localPosition = 
+                new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, transform.localPosition.z);
         }
 
 
@@ -185,7 +186,8 @@ public class PlayerInput : MonoBehaviour
         }
         else if (_vertical == 0)
         {
-            gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, transform.localPosition.z);
+            gameObject.transform.localPosition = 
+                new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, transform.localPosition.z);
         }
 
         #endregion
