@@ -7,8 +7,7 @@
 // 作成者:  北川 稔明
 // ---------------------------------------------------------  
 
-
-public interface IDamaged 
+public interface IDamaged
 {
-    void IsHitJudgment();
+    void IsHitJudgment(int playerOffensive);
 }

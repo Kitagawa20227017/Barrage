@@ -7,10 +7,10 @@
 // 作成者:  北川 稔明
 // ---------------------------------------------------------  
 using UnityEngine;
-using System.Collections;
 
 public class EnemyMove : MonoBehaviour
 {
+
     #region 変数
 
     #region const定数
@@ -28,10 +28,10 @@ public class EnemyMove : MonoBehaviour
 
     #endregion
 
-    [SerializeField,Header("曲がり始めるまでの時間")]
+    [SerializeField, Header("曲がり始めるまでの時間")]
     private float _curveTimer = 2f;
 
-    [SerializeField,Header("敵の動くスピード")]
+    [SerializeField, Header("敵の動くスピード")]
     private float _moveSpeed = 5f;
 
     // Transform格納用
@@ -59,7 +59,7 @@ public class EnemyMove : MonoBehaviour
         Left
     }
 
-    [SerializeField,Header("曲がる方向")]
+    [SerializeField, Header("曲がる方向")]
     private RotationDirection _rotationDirection = default;
 
     // _rotationDirectionの文字列化
@@ -84,7 +84,7 @@ public class EnemyMove : MonoBehaviour
         {
             _curveDirections = ANGLE_SPEED_RIGHT;
         }
-        else if(_direction == LEFT)
+        else if (_direction == LEFT)
         {
             _curveDirections = ANGLE_SPEED_LEFT;
         }
@@ -133,4 +133,5 @@ public class EnemyMove : MonoBehaviour
     }
 
     #endregion
+
 }

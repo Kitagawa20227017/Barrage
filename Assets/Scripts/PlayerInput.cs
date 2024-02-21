@@ -1,10 +1,10 @@
 // ---------------------------------------------------------  
-// PlayerMove.cs  
+// PlayerInput.cs  
 //   
 // プレイヤーの入力処理
 //
-// 作成日:  2024/2/1
-// 作成者:  北川 稔明
+// 作成日: 2024/2/1
+// 作成者: 北川 稔明
 // ---------------------------------------------------------  
 using UnityEngine;
 
@@ -16,23 +16,23 @@ public class PlayerInput : MonoBehaviour
     #region const変数
 
     // 最初に生成する弾の数
-    private const int INITIAL_INSTANTIATE = 30;
+    private const int INITIAL_INSTANTIATE = 15;
 
     // 横軸の移動量   
     private const float PLUS_HORIZONMOVE = 5f;
     private const float MINUS_HORIZONMOVE = -5f;
 
     // 縦軸の移動量
-    private const float PLUS_VERTICAL = 4f;
-    private const float MINUS_VERTICAL = -4f;
+    private const float PLUS_VERTICAL = 5f;
+    private const float MINUS_VERTICAL = -5f;
 
     // キーの入力値の補正
     private const float PLUS = 1f;
     private const float MINUS = -1f;
 
     // 横軸の移動制限
-    private const float PLAYER_MIN_POX_X = -14.5f;
-    private const float PLAYER_MAX_POX_X = 14.5f;
+    private const float PLAYER_MIN_POX_X = -11.5f;
+    private const float PLAYER_MAX_POX_X = 12f;
 
     // 縦軸の移動制限
     private const float PLAYER_MIN_POX_Y = -9f;
@@ -70,18 +70,18 @@ public class PlayerInput : MonoBehaviour
     {
         // 初期設定
         _playerAnimator = GetComponent<Animator>();
-        _playerAnimator.SetBool("isLeft",false);
+        _playerAnimator.SetBool("isLeft", false);
         _playerAnimator.SetBool("isRight", false);
         _playerBullets = new GameObject("PlayerBullets").transform;
 
         // 弾の生成
-        for(int i = 0; i <= INITIAL_INSTANTIATE; i++)
+        for (int i = 0; i <= INITIAL_INSTANTIATE; i++)
         {
             Instantiate(_playerBall, gameObject.transform.position, Quaternion.Euler(0, 0, 0), _playerBullets);
         }
 
         // 弾の非アクティブ化
-        foreach(Transform bullets in _playerBullets)
+        foreach (Transform bullets in _playerBullets)
         {
             bullets.gameObject.SetActive(false);
         }
@@ -90,7 +90,7 @@ public class PlayerInput : MonoBehaviour
     /// <summary>  
     /// 更新処理  
     /// </summary>  
-    void Update ()
+    void Update()
     {
         // 入力値の代入
         _horizontal = Input.GetAxis("Horizontal");
@@ -140,8 +140,8 @@ public class PlayerInput : MonoBehaviour
 
             if (gameObject.transform.localPosition.x < PLAYER_MAX_POX_X)
             {
-                gameObject.transform.position = 
-                    new Vector3(gameObject.transform.position.x + (PLUS_HORIZONMOVE * Time.deltaTime), gameObject.transform.position.y,transform.localPosition.z);
+                gameObject.transform.localPosition =
+                    new Vector3(gameObject.transform.localPosition.x + (PLUS_HORIZONMOVE * Time.deltaTime), gameObject.transform.localPosition.y, transform.localPosition.z);
             }
         }
         else if (_horizontal == MINUS)
@@ -152,8 +152,8 @@ public class PlayerInput : MonoBehaviour
 
             if (gameObject.transform.localPosition.x > PLAYER_MIN_POX_X)
             {
-                gameObject.transform.position = 
-                    new Vector3(gameObject.transform.localPosition.x + (MINUS_HORIZONMOVE * Time.deltaTime), gameObject.transform.position.y, transform.localPosition.z);
+                gameObject.transform.localPosition =
+                    new Vector3(gameObject.transform.localPosition.x + (MINUS_HORIZONMOVE * Time.deltaTime), gameObject.transform.localPosition.y, transform.localPosition.z);
             }
         }
         else if (_horizontal == 0)
@@ -162,7 +162,8 @@ public class PlayerInput : MonoBehaviour
             _playerAnimator.SetBool("isLeft", false);
             _playerAnimator.SetBool("isRight", false);
 
-            gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, transform.localPosition.z);
+            gameObject.transform.localPosition =
+                new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, transform.localPosition.z);
         }
 
 
@@ -171,7 +172,7 @@ public class PlayerInput : MonoBehaviour
         {
             if (gameObject.transform.localPosition.y < PLAYER_MAX_POX_Y)
             {
-                gameObject.transform.localPosition = 
+                gameObject.transform.localPosition =
                     new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y + (PLUS_VERTICAL * Time.deltaTime), transform.localPosition.z);
             }
         }
@@ -179,13 +180,14 @@ public class PlayerInput : MonoBehaviour
         {
             if (gameObject.transform.localPosition.y > PLAYER_MIN_POX_Y)
             {
-                gameObject.transform.localPosition = 
+                gameObject.transform.localPosition =
                     new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y + (MINUS_VERTICAL * Time.deltaTime), transform.localPosition.z);
             }
         }
         else if (_vertical == 0)
         {
-            gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, transform.localPosition.z);
+            gameObject.transform.localPosition =
+                new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, transform.localPosition.z);
         }
 
         #endregion
@@ -196,7 +198,7 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetButton("Attack"))
         {
             _timer += Time.deltaTime;
-            if(_timer > _coolTime)
+            if (_timer > _coolTime)
             {
                 ObjPool(this.transform.position);
                 _timer = 0;

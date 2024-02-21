@@ -3,11 +3,10 @@
 //   
 // 真っ直ぐ進む弾の処理
 //
-// 作成日:  2024/2/5
-// 作成者:  北川 稔明
+// 作成日: 2024/2/5
+// 作成者: 北川 稔明
 // ---------------------------------------------------------  
 using UnityEngine;
-using System.Collections;
 
 public class StraightLineMove : MonoBehaviour
 {
@@ -22,7 +21,7 @@ public class StraightLineMove : MonoBehaviour
 
     #endregion
 
-    [SerializeField,Header("弾の速さ")]
+    [SerializeField, Header("弾の速さ")]
     private float _moveSpeed = 7.5f;
 
     // 弾の進む方向の計算
@@ -38,7 +37,7 @@ public class StraightLineMove : MonoBehaviour
         Down
     }
 
-    [SerializeField,Header("弾の進む方向")]
+    [SerializeField, Header("弾の進む方向")]
     private Direction _direction = default;
 
     // Directionのstring化
@@ -47,22 +46,23 @@ public class StraightLineMove : MonoBehaviour
     #endregion
 
     #region メソッド  
-     
+
     /// <summary>  
     /// 更新前処理  
     /// </summary>  
-    private void Start ()
+    private void Start()
     {
+        // 初期設定
         _directionMemory = _direction.ToString();
-        if(_directionMemory == UP_MOVE)
+        if (_directionMemory == UP_MOVE)
         {
             _moveDirection = -1;
         }
-        else if(_directionMemory == DOWN_MOVE)
+        else if (_directionMemory == DOWN_MOVE)
         {
             _moveDirection = 1;
         }
-        _transform = this.transform; 
+        _transform = this.transform;
     }
 
     /// <summary>  
@@ -70,7 +70,8 @@ public class StraightLineMove : MonoBehaviour
     /// </summary>  
     private void Update()
     {
-        _transform.Translate(0,  _moveDirection * _moveSpeed * Time.deltaTime, 0);
+        // 真っ直ぐ進む
+        _transform.Translate(0, _moveDirection * _moveSpeed * Time.deltaTime, 0);
     }
 
     /// <summary>
@@ -82,6 +83,10 @@ public class StraightLineMove : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// 当たり判定処理
+    /// </summary>
+    /// <param name="collision">当たったオブジェクト</param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         gameObject.SetActive(false);

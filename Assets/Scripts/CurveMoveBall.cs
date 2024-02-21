@@ -11,6 +11,7 @@ using System.Collections;
 
 public class CurveMoveBall : MonoBehaviour
 {
+
     #region 変数
 
     #region const定数
@@ -44,7 +45,7 @@ public class CurveMoveBall : MonoBehaviour
     private int _storageAnglSpeed = default;
 
     // タイマー用
-    private float time = 0;
+    private float _timer = 0;
 
     // 現在の角度
     private float _objAngleNow = default;
@@ -63,7 +64,7 @@ public class CurveMoveBall : MonoBehaviour
     }
 
     // inspectorで設定できるようにする
-    [SerializeField,Header("曲がる向き")]
+    [SerializeField, Header("曲がる向き")]
     private RotationDirection _rotationDirection = default;
 
     // RotationDirectionをstring変換しておく
@@ -100,7 +101,7 @@ public class CurveMoveBall : MonoBehaviour
     private void Update()
     {
         // アクティブになったときに角度の記録
-        if(this.gameObject.activeSelf  && !_isActiveObj)
+        if (this.gameObject.activeSelf && !_isActiveObj)
         {
             _objAngle = _transform.eulerAngles.z;
 
@@ -109,10 +110,10 @@ public class CurveMoveBall : MonoBehaviour
         }
 
         // 時間を測る
-        time += Time.deltaTime;
+        _timer += Time.deltaTime;
 
         // 計測時間がタイマーを超えたら曲がり始める
-        if (time >= _directionsTimer)
+        if (_timer >= _directionsTimer)
         {
             _objAngleNow += _storageAnglSpeed * Time.deltaTime;
             _transform.rotation = Quaternion.Euler(0, 0, _objAngle + _objAngleNow);
@@ -122,14 +123,13 @@ public class CurveMoveBall : MonoBehaviour
         _transform.Translate(0, -_moveSpeed * Time.deltaTime, 0);
     }
 
-
     /// <summary>
     /// 画面外処理
     /// </summary>
     private void OnBecameInvisible()
     {
         // 初期化
-        time = 0;
+        _timer = 0;
         _objAngleNow = 0;
         _isActiveObj = false;
 
@@ -137,8 +137,13 @@ public class CurveMoveBall : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// 当たり判定処理
+    /// </summary>
+    /// <param name="collision">当たったオブジェクト</param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // 非アクティブ化
         gameObject.SetActive(false);
     }
 

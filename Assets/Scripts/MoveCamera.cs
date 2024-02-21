@@ -1,53 +1,38 @@
-// ---------------------------------------------------------  
-// MoveCamera.cs  
+// --------------------------------------------------------- 
+// MoveCamera.cs                                                
 //   
-// 作成日:  
-// 作成者:  
+// カメラの移動処理
+//
+// 作成日: 2024/2/15
+// 作成者: 北川 稔明
 // ---------------------------------------------------------  
 using UnityEngine;
-using System.Collections;
 
 public class MoveCamera : MonoBehaviour
 {
 
     #region 変数
 
-    #region const定数
+    // カメラの移動位置
+    private const float STOP_CAMERA = 100f;
 
     // カメラの移動スピード
-    private const float MOVE_SPEED = 5f;
+    [SerializeField, Header("移動スピード")]
+    private float _moveSpeed = 4.5f;
 
-    #endregion
-
-    #endregion
-
-    #region プロパティ  
     #endregion
 
     #region メソッド  
 
     /// <summary>  
-    /// 初期化処理  
-    /// </summary>  
-    private void Awake()
-    {
-    }
-     
-    /// <summary>  
-    /// 更新前処理  
-    /// </summary>  
-    private void Start ()
-    {
-    }
-
-    /// <summary>  
     /// 更新処理  
     /// </summary>  
-    private void Update ()
+    private void Update()
     {
-        if(transform.position.y <= 100f)
+        // 特定の位置まで移動する
+        if (transform.position.y <= STOP_CAMERA)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + MOVE_SPEED * Time.deltaTime, transform.position.z);
+            transform.position = new Vector3(transform.position.x, transform.position.y + _moveSpeed * Time.deltaTime, transform.position.z);
         }
     }
 
