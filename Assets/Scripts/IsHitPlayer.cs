@@ -1,11 +1,13 @@
 // ---------------------------------------------------------  
 // IsHitPlayer.cs  
 //   
-// 作成日:  
-// 作成者:  
+// プレイヤーのダメージ処理
+//
+// 作成日: 2024/2/14
+// 作成者: 北川 稔明  
 // ---------------------------------------------------------  
 using UnityEngine;
-using System.Collections;
+using TMPro;
 
 public class IsHitPlayer : MonoBehaviour,IDamaged
 {
@@ -14,14 +16,26 @@ public class IsHitPlayer : MonoBehaviour,IDamaged
 
     #region consr定数
 
+    // 最大値
+    private const int MAX_VALUE = 1;
+
     // アルファ値の最大
-    private const float COLOE_ALPHA = 255f;
+    private const float COLOE_ALPHA = 1f;
+
+    // Mathf.Repeatの上限値
+    private const float UPPER_VALUE = 0.5f;
 
     // 点滅時間
-    private const float IS_HIT_TIMER = 3f;
+    private const float IS_HIT_TIMER = 2f;
+
+    // 点滅の周期
+    private const float CYCLE = 0.25f;
 
     #endregion
-    
+
+    // 残機の表示
+    private TextMeshProUGUI _uGUI = default;
+
     // プレイヤーのスプライト
     private SpriteRenderer _target = default;
 
@@ -37,15 +51,9 @@ public class IsHitPlayer : MonoBehaviour,IDamaged
     // 時間計測用のタイマー
     private float _timer = 0;
 
-    // 
-    private float repeatValue = default;
+    // デューティ比の格納用
+    private float _repeatValue = default;
 
-    // 
-    private float _cycle = 0.5f;
-
-    #endregion
-
-    #region プロパティ  
     #endregion
 
     #region メソッド  
@@ -55,7 +63,9 @@ public class IsHitPlayer : MonoBehaviour,IDamaged
     /// </summary>  
     private void Start ()
     {
+        // 初期設定
         _target = this.gameObject.GetComponent<SpriteRenderer>();
+        _uGUI = GameObject.Find("PlayerStock").GetComponent<TextMeshProUGUI>();
         _targetColor = _target.color;
     }
 
@@ -64,19 +74,22 @@ public class IsHitPlayer : MonoBehaviour,IDamaged
     /// </summary>  
     private void Update ()
     {
+        // 弾が当たったとき
         if(_isHit)
         {
             _timer += Time.deltaTime;
 
-            // 
-            repeatValue = Mathf.Repeat((float)_timer, _cycle);
+            // 値の取得
+            _repeatValue = Mathf.Repeat((float)_timer, UPPER_VALUE);
 
             // デューティ比を指定して代入
-            _targetColor.a = repeatValue >= _cycle * 0.5f ? 1 : 0;
+            _targetColor.a = _repeatValue >= CYCLE ? MAX_VALUE : 0;
             _target.color = _targetColor;
 
+            // 一定時間過ぎたとき
             if (_timer >= IS_HIT_TIMER)
             {
+                // 点滅を止める
                 _targetColor.a = COLOE_ALPHA;
                 _target.color = _targetColor;
                 _timer = 0;
@@ -85,17 +98,25 @@ public class IsHitPlayer : MonoBehaviour,IDamaged
         }
     }
 
-    public void IsHitJudgment()
+    /// <summary>
+    /// ダメージ処理
+    /// </summary>
+    /// <param name="playerOffensive">プレイヤーの攻撃力</param>
+    public void IsHitJudgment(int playerOffensive)
     {
-        if(_playerStocks < 0)
+        // 残機がないとき
+        if(_playerStocks <= 0)
         {
             Debug.Log("Game Over");
             return;
         }
 
-        if(!_isHit)
+        // 無敵時間ではないとき
+        if(!_isHit && _playerStocks > 0)
         {
+            // 残機を減らして無敵付与
             _playerStocks--;
+            _uGUI.text = "×" + _playerStocks; 
             _isHit = true;
         }
     }

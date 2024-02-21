@@ -3,8 +3,8 @@
 //   
 // プレイヤーの入力処理
 //
-// 作成日:  2024/2/1
-// 作成者:  北川 稔明
+// 作成日: 2024/2/1
+// 作成者: 北川 稔明
 // ---------------------------------------------------------  
 using UnityEngine;
 
@@ -23,16 +23,16 @@ public class PlayerInput : MonoBehaviour
     private const float MINUS_HORIZONMOVE = -5f;
 
     // 縦軸の移動量
-    private const float PLUS_VERTICAL = 4f;
-    private const float MINUS_VERTICAL = -4f;
+    private const float PLUS_VERTICAL = 5f;
+    private const float MINUS_VERTICAL = -5f;
 
     // キーの入力値の補正
     private const float PLUS = 1f;
     private const float MINUS = -1f;
 
     // 横軸の移動制限
-    private const float PLAYER_MIN_POX_X = -14.5f;
-    private const float PLAYER_MAX_POX_X = 14.5f;
+    private const float PLAYER_MIN_POX_X = -11.5f;
+    private const float PLAYER_MAX_POX_X = 12f;
 
     // 縦軸の移動制限
     private const float PLAYER_MIN_POX_Y = -9f;

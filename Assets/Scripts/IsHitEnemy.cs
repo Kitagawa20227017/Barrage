@@ -1,26 +1,24 @@
 // ---------------------------------------------------------  
 // IsHitEnemy.cs  
 //   
-// 作成日:  
-// 作成者:  
+// 敵のダメージ処理
+//
+// 作成日: 2024/2/14
+// 作成者: 北川 稔明  
 // ---------------------------------------------------------  
 using UnityEngine;
-using System.Collections;
 
 public class IsHitEnemy : MonoBehaviour,IDamaged
 {
 
     #region 変数  
 
+    // アニメーター取得用
     Animator _enemyAnimator = default;
 
     #endregion
 
-    #region プロパティ  
-    #endregion
-
     #region メソッド  
-
 
     /// <summary>  
     /// 更新前処理  
@@ -32,16 +30,18 @@ public class IsHitEnemy : MonoBehaviour,IDamaged
     }
 
     /// <summary>
-    /// 弾が当たったときの処理
+    /// ダメージ処理
     /// </summary>
-    /// <param name="isHitTga"></param>
-    public void IsHitJudgment()
+    /// <param name="playerOffensive">プレイヤーの攻撃力</param>
+    public void IsHitJudgment(int playerOffensive)
     {
+        // アニメーション再生
         _enemyAnimator.SetBool("isHit", true);
     }
 
     public void OnAnimationEnd()
     {
+        // 非アクティブ化
         this.gameObject.SetActive(false);
     }
 

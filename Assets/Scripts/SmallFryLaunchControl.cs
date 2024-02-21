@@ -3,8 +3,8 @@
 //   
 // 敵の弾発射処理
 //
-// 作成日:  2024/2/2
-// 作成者:  北川 稔明
+// 作成日: 2024/2/2
+// 作成者: 北川 稔明
 // ---------------------------------------------------------  
 using UnityEngine;
 
@@ -65,13 +65,17 @@ public class SmallFryLaunchControl : MonoBehaviour
     /// </summary>  
     void Start()
     {
+        // 初期設定
         _initialAngle = transform.eulerAngles.z;
         _bullets = new GameObject("SmallFryBullets").transform;
+
+        // 最初に生成しておく
         for (int i = 0; i < INITIAL_INSTANTIATE; i++)
         {
             Instantiate(_gameObject, gameObject.transform.position, Quaternion.Euler(0, 0, 0), _bullets);
         }
 
+        // 非アクティブ化
         foreach(Transform bulletsTrans in _bullets)
         {
             bulletsTrans.gameObject.SetActive(false);
@@ -83,7 +87,7 @@ public class SmallFryLaunchControl : MonoBehaviour
     /// </summary>  
     void Update()
     {
-
+        // 画面外なら処理しない
         if(!_isInCamera)
         {
             return;
@@ -141,15 +145,20 @@ public class SmallFryLaunchControl : MonoBehaviour
 
         #region 正面の弾
 
+        // 子オブジェクト探索
         foreach (Transform bulletsTrans in _bullets)
         {
             if (!bulletsTrans.gameObject.activeSelf)
             {
                 isActive = false;
-                //非アクティブなオブジェクトの位置と回転を設定
+                
+                // 非アクティブなオブジェクトの位置と回転を設定
                 bulletsTrans.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, this.transform.eulerAngles.z));
-                //アクティブにする
+                
+                // アクティブにする
                 bulletsTrans.gameObject.SetActive(true);
+
+                // 非アクティブの弾があった
                 isActive = true;
                 break;
             }
@@ -165,18 +174,27 @@ public class SmallFryLaunchControl : MonoBehaviour
 
         #region 左側の弾
 
+        // 弾数分ループ
         for (int i = 1; i <= _ballQuantity; i++)
         {
+            // 非アクティブの弾があるかどうか
             isActive = false;
-             settingAngle = _ballInterval * i;
+
+            // 角度計算
+            settingAngle = _ballInterval * i;
+
+            // 子オブジェクト探索
             foreach (Transform bulletsTrans in _bullets)
             {
                 if (!bulletsTrans.gameObject.activeSelf)
                 {
                     // 非アクティブなオブジェクトの位置と回転を設定
                     bulletsTrans.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, this.transform.eulerAngles.z + settingAngle));
+                    
                     // アクティブにする
                     bulletsTrans.gameObject.SetActive(true);
+
+                    // 非アクティブの弾があった
                     isActive = true;
                     break;
                 }
@@ -193,19 +211,29 @@ public class SmallFryLaunchControl : MonoBehaviour
 
         #region 右側の弾
 
+        // 弾数分ループ
         for (int i = 1; i <= _ballQuantity; i++)
         {
+            // 非アクティブの弾があるかどうか
             isActive = false;
+
+            // 角度計算
             settingAngle = _ballInterval * i;
+
+            // 子オブジェクト探索
             foreach (Transform bulletsTrans in _bullets)
             {
                 if (!bulletsTrans.gameObject.activeSelf)
                 {
                     // 非アクティブなオブジェクトの位置と回転を設定
                     bulletsTrans.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - settingAngle));
+
                     // アクティブにする
                     bulletsTrans.gameObject.SetActive(true);
+                    
+                    // 非アクティブの弾があった
                     isActive = true;
+
                     break;
                 }
 
@@ -219,8 +247,8 @@ public class SmallFryLaunchControl : MonoBehaviour
         }
 
         #endregion
+    
     }
-
 
     #endregion
 

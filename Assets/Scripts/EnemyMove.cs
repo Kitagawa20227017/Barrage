@@ -10,6 +10,7 @@ using UnityEngine;
 
 public class EnemyMove : MonoBehaviour
 {
+
     #region 変数
 
     #region const定数
@@ -132,4 +133,5 @@ public class EnemyMove : MonoBehaviour
     }
 
     #endregion
+
 }

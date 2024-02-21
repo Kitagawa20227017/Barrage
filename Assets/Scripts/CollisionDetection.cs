@@ -13,6 +13,9 @@ public class CollisionDetection : MonoBehaviour
 
     #region 変数  
 
+    // プレイヤーの攻撃力
+    private int _playerDamage = 1;
+
     // どの弾が当たったとき判定するか
     private enum Classification
     {
@@ -24,10 +27,10 @@ public class CollisionDetection : MonoBehaviour
     private Classification _classification = default;
 
     // インターフェース用
-    private IDamaged damaged = default;
+    private IDamaged _damaged = default;
 
     // _classificationを文字列化して記憶
-    private string _selection = default; 
+    private string _selection = default;
 
     #endregion
 
@@ -40,7 +43,7 @@ public class CollisionDetection : MonoBehaviour
     {
         // 初期設定
         _selection = _classification.ToString();
-        damaged = this.gameObject.GetComponent<IDamaged>();
+        _damaged = this.gameObject.GetComponent<IDamaged>();
     }
 
     /// <summary>
@@ -53,7 +56,7 @@ public class CollisionDetection : MonoBehaviour
         if(collision.tag == _selection)
         {
             // ダメージ処理の呼び出し
-            damaged.IsHitJudgment();
+            _damaged.IsHitJudgment(_playerDamage);
         }
     }
 

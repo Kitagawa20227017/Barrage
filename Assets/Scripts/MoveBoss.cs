@@ -3,8 +3,8 @@
 //
 // ボスの行動処理 
 //
-// 作成日:  2024/2/8
-// 作成者:  北川 稔明
+// 作成日: 2024/2/8
+// 作成者: 北川 稔明
 // ---------------------------------------------------------  
 using UnityEngine;
 
@@ -31,7 +31,8 @@ public class MoveBoss : MonoBehaviour
     private const float ATTACK_INTERVAL = 0.35f;
 
     // 動ける範囲
-    private const float MOVE_SCOPE = 13.5f;
+    private const float MOVE_SCOPE_MIN_X = -10.5f;
+    private const float MOVE_SCOPE_MAX_X = 11f;
 
     // 動く速さ
     private const float MOVE_SPEED = 7.5f;
@@ -146,11 +147,11 @@ public class MoveBoss : MonoBehaviour
     private void ActionPatrn0()
     {
         // 特定の位置まで移動したとき
-        if(transform .position.x <= -MOVE_SCOPE && !_isMove)
+        if(transform .position.x <= MOVE_SCOPE_MIN_X && !_isMove)
         {
             _isMove = true;
         }
-        else if (transform.position.x >= MOVE_SCOPE && _isMove )
+        else if (transform.position.x >= MOVE_SCOPE_MAX_X && _isMove )
         {
             // 動きを止めて攻撃
             _isStop = true;
@@ -190,11 +191,11 @@ public class MoveBoss : MonoBehaviour
     private void ActionPatrn1()
     {
         // 特定の位置まで移動したとき
-        if (transform.position.x >= MOVE_SCOPE && !_isMove)
+        if (transform.position.x >= MOVE_SCOPE_MAX_X && !_isMove)
         {
             _isMove = true;
         }
-        else if (transform.position.x <= -MOVE_SCOPE && _isMove)
+        else if (transform.position.x <= MOVE_SCOPE_MIN_X && _isMove)
         {
             // 動きを止めて攻撃
             _isStop = true;
@@ -253,15 +254,16 @@ public class MoveBoss : MonoBehaviour
             // 攻撃終了
             if (_attackIntervalTimer > ATTACK_TIME)
             {
+                _roundTripCount = 0;
                 _isActionFin = true;
             }
         }
-        else if (transform.position.x >= MOVE_SCOPE && !_isMove)
+        else if (transform.position.x >= MOVE_SCOPE_MAX_X && !_isMove)
         {
             _isMove = true;
             _roundTripCount++;
         }
-        else if (transform.position.x <= -MOVE_SCOPE && _isMove)
+        else if (transform.position.x <= MOVE_SCOPE_MIN_X && _isMove)
         {
             _isMove = false;
             _roundTripCount++;
@@ -284,11 +286,11 @@ public class MoveBoss : MonoBehaviour
     private void ActionPatrn3()
     {
         // 特定の位置まで移動したとき
-        if (transform.position.x <= -MOVE_SCOPE && !_isMove)
+        if (transform.position.x <= MOVE_SCOPE_MIN_X && !_isMove)
         {
             _isMove = true;
         }
-        else if (transform.position.x >= MOVE_SCOPE && _isMove)
+        else if (transform.position.x >= MOVE_SCOPE_MAX_X && _isMove)
         {
             // 動きを止めて攻撃
             _isStop = true;
@@ -328,11 +330,11 @@ public class MoveBoss : MonoBehaviour
     private void ActionPatrn4()
     {
         // 特定の位置まで移動したとき
-        if (transform.position.x >= MOVE_SCOPE && !_isMove)
+        if (transform.position.x >= MOVE_SCOPE_MAX_X && !_isMove)
         {
             _isMove = true;
         }
-        else if (transform.position.x <= -MOVE_SCOPE && _isMove)
+        else if (transform.position.x <= MOVE_SCOPE_MIN_X && _isMove)
         {
             // 動きを止めて攻撃
             _isStop = true;
@@ -365,6 +367,7 @@ public class MoveBoss : MonoBehaviour
             gameObject.transform.Translate(MOVE_SPEED * Time.deltaTime, 0, 0);
         }
     }
+
     #endregion
 
 }

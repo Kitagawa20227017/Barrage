@@ -3,11 +3,10 @@
 //   
 // 真っ直ぐ進む弾の処理
 //
-// 作成日:  2024/2/5
-// 作成者:  北川 稔明
+// 作成日: 2024/2/5
+// 作成者: 北川 稔明
 // ---------------------------------------------------------  
 using UnityEngine;
-using System.Collections;
 
 public class StraightLineMove : MonoBehaviour
 {
@@ -53,6 +52,7 @@ public class StraightLineMove : MonoBehaviour
     /// </summary>  
     private void Start ()
     {
+        // 初期設定
         _directionMemory = _direction.ToString();
         if(_directionMemory == UP_MOVE)
         {
@@ -70,6 +70,7 @@ public class StraightLineMove : MonoBehaviour
     /// </summary>  
     private void Update()
     {
+        // 真っ直ぐ進む
         _transform.Translate(0,  _moveDirection * _moveSpeed * Time.deltaTime, 0);
     }
 
@@ -82,6 +83,10 @@ public class StraightLineMove : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// 当たり判定処理
+    /// </summary>
+    /// <param name="collision">当たったオブジェクト</param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         gameObject.SetActive(false);
