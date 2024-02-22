@@ -138,6 +138,7 @@ public class PlayerInput : MonoBehaviour
             _playerAnimator.SetBool("isLeft", false);
             _playerAnimator.SetBool("isRight", true);
 
+            // 移動可能範囲なら移動
             if (gameObject.transform.localPosition.x < PLAYER_MAX_POX_X)
             {
                 gameObject.transform.localPosition =
@@ -150,6 +151,7 @@ public class PlayerInput : MonoBehaviour
             _playerAnimator.SetBool("isLeft", true);
             _playerAnimator.SetBool("isRight", false);
 
+            // 移動可能範囲なら移動
             if (gameObject.transform.localPosition.x > PLAYER_MIN_POX_X)
             {
                 gameObject.transform.localPosition =
@@ -170,6 +172,7 @@ public class PlayerInput : MonoBehaviour
         // 縦軸の移動処理 
         if (_vertical == PLUS)
         {
+            // 移動可能範囲なら移動
             if (gameObject.transform.localPosition.y < PLAYER_MAX_POX_Y)
             {
                 gameObject.transform.localPosition =
@@ -178,6 +181,7 @@ public class PlayerInput : MonoBehaviour
         }
         else if (_vertical == MINUS)
         {
+            // 移動可能範囲なら移動
             if (gameObject.transform.localPosition.y > PLAYER_MIN_POX_Y)
             {
                 gameObject.transform.localPosition =

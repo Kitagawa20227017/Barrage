@@ -38,20 +38,19 @@ public class IsHitBoss : MonoBehaviour, IDamaged
     /// <param name="playerOffensive">プレイヤーの攻撃力</param>
     public void IsHitJudgment(int playerOffensive)
     {
-        // ボスのHPがあったらダメージ処理
-        // なかったら撃破
-        if (_bossHP > 0)
-        {
-            // HPを減らす
-            _bossHP -= playerOffensive;
+        // ボスのHPを減らす
+        _bossHP -= playerOffensive;
 
-            // 被弾アニメーション再生
-            _bossAnimator.SetBool("IsHit", true);
-        }
-        else if (_bossHP <= 0)
+        // HPがまだあるか判定
+        if (_bossHP <= 0)
         {
             // 撃破アニメーション再生
             _bossAnimator.SetBool("IsCrushing", true);
+        }
+        else
+        {
+            // 被弾アニメーション再生
+            _bossAnimator.SetBool("IsHit", true);
         }
     }
 

@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 4365552222809451780}
   m_Layer: 6
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: EnemyBall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: -1147401495359466748, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.92156863}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _curveTimer: 100
-  _moveSpeed: 0
+  _moveSpeed: 3
   _rotationDirection: 1
 --- !u!114 &1856540272737735418
 MonoBehaviour:
@@ -119,10 +119,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameObject: {fileID: 6445742773940630157, guid: 2666debf04d936f4b83e6f2b1ff6cd34, type: 3}
-  _timer: 0.25
-  _time: 1
-  _ballQuantity: 1
-  _ballInterval: 20
+  _timer: 0.35
+  _time: 0.85
+  _ballQuantity: 0
+  _ballInterval: 25
   _conutBall: 5
 --- !u!114 &333061658281039056
 MonoBehaviour:
@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140c6d98348e2df41b80d409189db64e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyHP: 1
 --- !u!60 &3461268384669926018
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -223,7 +224,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!95 &4365552222809451780
 Animator:
   serializedVersion: 5
