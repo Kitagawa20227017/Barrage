@@ -33,7 +33,7 @@ public class TitleMenu : MonoBehaviour
 
     // TextMesh格納用
     private TextMeshProUGUI _stageSelectText = default;
-    private TextMeshProUGUI __exitText = default;
+    private TextMeshProUGUI _exitText = default;
 
     // 
     private bool flag = false;
@@ -56,7 +56,8 @@ public class TitleMenu : MonoBehaviour
     {
         // 初期設定
         _stageSelectText = _stageSelectUI.GetComponent<TextMeshProUGUI>();
-        __exitText = _exitUI.GetComponent<TextMeshProUGUI>();
+        _exitText = _exitUI.GetComponent<TextMeshProUGUI>();
+        gameObject.SetActive(true);
     }
 
     /// <summary>  
@@ -133,7 +134,7 @@ public class TitleMenu : MonoBehaviour
 
             // Exitを選択している状態にする
             _exitUI.transform.localPosition = new Vector3(0, _exitUI.transform.localPosition.y, _exitUI.transform.localPosition.x);
-            __exitText.color = Color.red;
+            _exitText.color = Color.red;
         }
         else
         {
@@ -143,7 +144,7 @@ public class TitleMenu : MonoBehaviour
 
             // Exitを選択していない状態にする
             _exitUI.transform.localPosition = new Vector3(SELECT_UI_POS_X, _exitUI.transform.localPosition.y, _exitUI.transform.localPosition.x);
-            __exitText.color = Color.white;
+            _exitText.color = Color.white;
         }
     }
 

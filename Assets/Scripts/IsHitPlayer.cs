@@ -20,7 +20,9 @@ public class IsHitPlayer : MonoBehaviour, IDamaged
     private const int MAX_VALUE = 1;
 
     // アルファ値の最大
-    private const float COLOE_ALPHA = 1f;
+    private const float COLOE_ALPHA_HIDDEN = 0f;
+
+    private const float COLOE_ALPHA_DISPLAY = 1f;
 
     // Mathf.Repeatの上限値
     private const float UPPER_VALUE = 0.5f;
@@ -45,14 +47,27 @@ public class IsHitPlayer : MonoBehaviour, IDamaged
     // 残機
     private int _playerStocks = 5;
 
-    // 弾が当たったか
-    private bool _isHit = false;
-
     // 時間計測用のタイマー
     private float _timer = 0;
 
     // デューティ比の格納用
     private float _repeatValue = default;
+
+    // 弾が当たったか
+    private bool _isHit = false;
+
+    // 死亡判定
+    private bool isDeath = false;
+
+    #endregion
+
+    #region プロパティ
+
+    public bool IsDeath 
+    { 
+        get => isDeath; 
+        set => isDeath = value; 
+    }
 
     #endregion
 
@@ -90,7 +105,7 @@ public class IsHitPlayer : MonoBehaviour, IDamaged
             if (_timer >= IS_HIT_TIMER)
             {
                 // 点滅を止める
-                _targetColor.a = COLOE_ALPHA;
+                _targetColor.a = COLOE_ALPHA_HIDDEN;
                 _target.color = _targetColor;
                 _timer = 0;
                 _isHit = false;
@@ -107,7 +122,8 @@ public class IsHitPlayer : MonoBehaviour, IDamaged
         // 残機がないとき
         if (_playerStocks <= 0)
         {
-            Debug.Log("Game Over");
+            IsDeath = true;
+            _targetColor.a = COLOE_ALPHA_DISPLAY;
             return;
         }
 

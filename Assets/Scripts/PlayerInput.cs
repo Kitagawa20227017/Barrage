@@ -59,6 +59,8 @@ public class PlayerInput : MonoBehaviour
     private float _horizontal = default;
     private float _vertical = default;
 
+    private bool _isPlayerInput = false;
+
     #endregion
 
     #region メソッド  
@@ -92,6 +94,11 @@ public class PlayerInput : MonoBehaviour
     /// </summary>  
     void Update()
     {
+        if(!_isPlayerInput)
+        {
+            return;
+        }
+
         // 入力値の代入
         _horizontal = Input.GetAxis("Horizontal");
         _vertical = Input.GetAxis("Vertical");
@@ -176,7 +183,8 @@ public class PlayerInput : MonoBehaviour
             if (gameObject.transform.localPosition.y < PLAYER_MAX_POX_Y)
             {
                 gameObject.transform.localPosition =
-                    new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y + (PLUS_VERTICAL * Time.deltaTime), transform.localPosition.z);
+                    new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y + (PLUS_VERTICAL * Time.deltaTime), 
+                    transform.localPosition.z);
             }
         }
         else if (_vertical == MINUS)
@@ -185,7 +193,8 @@ public class PlayerInput : MonoBehaviour
             if (gameObject.transform.localPosition.y > PLAYER_MIN_POX_Y)
             {
                 gameObject.transform.localPosition =
-                    new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y + (MINUS_VERTICAL * Time.deltaTime), transform.localPosition.z);
+                    new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y + (MINUS_VERTICAL * Time.deltaTime), 
+                    transform.localPosition.z);
             }
         }
         else if (_vertical == 0)
@@ -233,6 +242,11 @@ public class PlayerInput : MonoBehaviour
 
         //非アクティブなオブジェクトがない場合新規生成
         Instantiate(_playerBall, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z), _playerBullets);
+    }
+
+    public void IsPlayerInput()
+    {
+        _isPlayerInput = !_isPlayerInput;
     }
 
     #endregion
