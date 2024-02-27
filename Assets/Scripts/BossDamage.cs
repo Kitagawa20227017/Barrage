@@ -8,7 +8,7 @@
 // ---------------------------------------------------------  
 using UnityEngine;
 
-public class IsHitBoss : MonoBehaviour, IDamaged
+public class BossDamage : MonoBehaviour, IDamaged
 {
 
     #region 変数  
@@ -17,8 +17,20 @@ public class IsHitBoss : MonoBehaviour, IDamaged
     private Animator _bossAnimator = default;
 
     // ボスのHP
-    private int _bossHP = 50;
+    private int _bossHP = 1;
 
+    private bool isDeath = false;
+
+    #endregion
+
+    #region プロパティ 
+
+    public bool IsDeath 
+    { 
+        get => isDeath; 
+        set => isDeath = value; 
+    }
+    
     #endregion
 
     #region メソッド  
@@ -68,6 +80,7 @@ public class IsHitBoss : MonoBehaviour, IDamaged
     /// </summary>
     public void IsCrushing()
     {
+        IsDeath = true;
         // 非アクティブ化
         this.gameObject.SetActive(false);
     }

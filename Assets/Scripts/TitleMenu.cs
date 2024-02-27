@@ -28,18 +28,17 @@ public class TitleMenu : MonoBehaviour
     [SerializeField, Header("ExitUIオブジェクト")]
     private GameObject _exitUI = default;
 
-    [SerializeField]
+    [SerializeField,Header("ステージ選択UI")]
     private GameObject _stageSummary = default;
 
     // TextMesh格納用
     private TextMeshProUGUI _stageSelectText = default;
     private TextMeshProUGUI _exitText = default;
 
-    // 
-    private bool flag = false;
+    // Exitにカーソルが合ってるかどうか
+    private bool _isExit = false;
 
     // プレイヤーの入力方向の格納場所
-    private float _horizontal = default;
     private float _vertical = default;
 
     #endregion
@@ -66,25 +65,9 @@ public class TitleMenu : MonoBehaviour
     private void Update ()
     {
         // 入力値の代入
-        _horizontal = Input.GetAxis("Horizontal");
         _vertical = Input.GetAxis("Vertical");
 
         #region 入力値の補正
-
-        // 横軸の移動
-        if (_horizontal > 0)
-        {
-            _horizontal = PLUS;
-        }
-        else if (_horizontal < 0)
-        {
-            _horizontal = MINUS;
-        }
-        else
-        {
-            _horizontal = 0;
-        }
-
 
         // 縦軸の移動
         if (_vertical > 0)
@@ -104,28 +87,30 @@ public class TitleMenu : MonoBehaviour
 
         if(_vertical == PLUS)
         {
-            flag = false;
+            _isExit = false;
         }
         else if(_vertical == MINUS)
         {
-            flag = true;
+            _isExit = true;
         }
 
-        if(Input.GetButtonDown("Enter") && flag)
+        if(Input.GetButtonDown("Enter") && _isExit)
         {
+            // ゲーム終了
             #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
             #else
             Application.Quit();//ゲームプレイ終了
             #endif
         }
-        else if (Input.GetButtonDown("Enter") && !flag)
+        else if (Input.GetButtonDown("Enter") && !_isExit)
         {
+            // ステージ選択UIをアクティブ
             _stageSummary.SetActive(true);
             gameObject.SetActive(false);
         }
 
-        if (flag)
+        if (_isExit)
         {
             // ステージを選択していない状態にする
             _stageSelectUI.transform.localPosition =

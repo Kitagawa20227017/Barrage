@@ -94,10 +94,10 @@ public class PlayerInput : MonoBehaviour
     /// </summary>  
     void Update()
     {
-        if(!_isPlayerInput)
-        {
-            return;
-        }
+        //if(!_isPlayerInput)
+        //{
+        //    return;
+        //}
 
         // 入力値の代入
         _horizontal = Input.GetAxis("Horizontal");

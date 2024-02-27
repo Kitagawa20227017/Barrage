@@ -9,7 +9,7 @@
 using UnityEngine;
 using TMPro;
 
-public class IsHitPlayer : MonoBehaviour, IDamaged
+public class PlayerDamage : MonoBehaviour, IDamaged
 {
 
     #region 変数  
@@ -35,6 +35,9 @@ public class IsHitPlayer : MonoBehaviour, IDamaged
 
     #endregion
 
+
+    private Animator _playerAnimator = default;
+
     // 残機の表示
     private TextMeshProUGUI _uGUI = default;
 
@@ -57,7 +60,9 @@ public class IsHitPlayer : MonoBehaviour, IDamaged
     private bool _isHit = false;
 
     // 死亡判定
-    private bool isDeath = false;
+    private bool _isDeath = false;
+
+    private bool _isStop = false;
 
     #endregion
 
@@ -65,8 +70,8 @@ public class IsHitPlayer : MonoBehaviour, IDamaged
 
     public bool IsDeath 
     { 
-        get => isDeath; 
-        set => isDeath = value; 
+        get => _isDeath; 
+        set => _isDeath = value; 
     }
 
     #endregion
@@ -81,6 +86,7 @@ public class IsHitPlayer : MonoBehaviour, IDamaged
         // 初期設定
         _target = this.gameObject.GetComponent<SpriteRenderer>();
         _uGUI = GameObject.Find("PlayerStock").GetComponent<TextMeshProUGUI>();
+        _playerAnimator = gameObject.GetComponent<Animator>();
         _targetColor = _target.color;
     }
 
@@ -105,7 +111,7 @@ public class IsHitPlayer : MonoBehaviour, IDamaged
             if (_timer >= IS_HIT_TIMER)
             {
                 // 点滅を止める
-                _targetColor.a = COLOE_ALPHA_HIDDEN;
+                _targetColor.a = COLOE_ALPHA_DISPLAY;
                 _target.color = _targetColor;
                 _timer = 0;
                 _isHit = false;
@@ -119,22 +125,43 @@ public class IsHitPlayer : MonoBehaviour, IDamaged
     /// <param name="playerOffensive">プレイヤーの攻撃力</param>
     public void IsHitJudgment(int playerOffensive)
     {
+        if(_isStop)
+        {
+            return;
+        }
+
+        // 残機を減らす
+        _playerStocks--;
+
         // 残機がないとき
         if (_playerStocks <= 0)
         {
             IsDeath = true;
-            _targetColor.a = COLOE_ALPHA_DISPLAY;
+            _playerAnimator.SetBool("isShootingDown", true);
             return;
         }
 
         // 無敵時間ではないとき
         if (!_isHit && _playerStocks > 0)
         {
-            // 残機を減らして無敵付与
-            _playerStocks--;
+            // 無敵付与
             _uGUI.text = "×" + _playerStocks;
             _isHit = true;
         }
+    }
+
+    /// <summary>
+    /// 爆破アニメーション終了処理
+    /// </summary>
+    public void isShootingDown()
+    {
+        _targetColor.a = COLOE_ALPHA_HIDDEN;
+        _target.color = _targetColor;
+    }
+
+    public void IsStop()
+    {
+        _isStop = !_isStop;
     }
 
     #endregion

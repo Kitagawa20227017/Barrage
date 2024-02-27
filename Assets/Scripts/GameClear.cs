@@ -1,5 +1,5 @@
 // ---------------------------------------------------------  
-// GameOver.cs  
+// GameClear.cs  
 //   
 // 作成日:  
 // 作成者:  
@@ -8,7 +8,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class GameOver : MonoBehaviour
+public class GameClear : MonoBehaviour
 {
 
     #region 変数  
@@ -19,19 +19,24 @@ public class GameOver : MonoBehaviour
     private const float PLUS = 1f;
     private const float MINUS = -1f;
 
-    private const float SELECT_UI_POS_X = 170f;
+    private const float UI_MOVE_POS_X = 170f;
+    private const float UI_POS_X = 220f;
 
     #endregion
+
+    [SerializeField]
+    private GameObject _clearUI = default;
 
     [SerializeField, Header("StageUIオブジェクト")]
     private GameObject _titleUI = default;
 
     [SerializeField, Header("ExitUIオブジェクト")]
-    private GameObject _retryUI = default;
+    private GameObject _nextStageUI = default;
 
     // TextMesh格納用
     private TextMeshProUGUI _titleText = default;
-    private TextMeshProUGUI _retryText = default;
+    private TextMeshProUGUI _nextStageText = default;
+    private TextMeshProUGUI _clearText = default;
 
     // 
     private bool flag = true;
@@ -56,9 +61,11 @@ public class GameOver : MonoBehaviour
     {
         // 初期設定
         _titleText = _titleUI.GetComponent<TextMeshProUGUI>();
-        _retryText = _retryUI.GetComponent<TextMeshProUGUI>();
+        _nextStageText = _nextStageUI.GetComponent<TextMeshProUGUI>();
+        _clearText = _clearUI.GetComponent<TextMeshProUGUI>();
         gameObject.SetActive(true);
-        _sceneName = SceneManager.GetActiveScene().name;
+        _clearText.text = SceneManager.GetActiveScene().name + " Clear";
+        SceneAnalysis(SceneManager.sceneCountInBuildSettings, SceneManager.GetActiveScene().name);
     }
 
     /// <summary>  
@@ -109,23 +116,44 @@ public class GameOver : MonoBehaviour
         {
             // ステージを選択していない状態にする
             _titleUI.transform.localPosition =
-                new Vector3(SELECT_UI_POS_X, _titleUI.transform.localPosition.y, _titleUI.transform.localPosition.x);
+                new Vector3(UI_POS_X, _titleUI.transform.localPosition.y, _titleUI.transform.localPosition.x);
             _titleText.color = Color.white;
 
             // Exitを選択している状態にする
-            _retryUI.transform.localPosition = new Vector3(0, _retryUI.transform.localPosition.y, _retryUI.transform.localPosition.x);
-            _retryText.color = Color.red;
+            _nextStageUI.transform.localPosition = new Vector3(UI_MOVE_POS_X, _nextStageUI.transform.localPosition.y, _nextStageUI.transform.localPosition.x);
+            _nextStageText.color = Color.red;
         }
         else
         {
             // ステージを選択している状態にする
-            _titleUI.transform.localPosition = new Vector3(0, _titleUI.transform.localPosition.y, _titleUI.transform.localPosition.x);
+            _titleUI.transform.localPosition = new Vector3(UI_MOVE_POS_X, _titleUI.transform.localPosition.y, _titleUI.transform.localPosition.x);
             _titleText.color = Color.red;
 
             // Exitを選択していない状態にする
-            _retryUI.transform.localPosition = new Vector3(SELECT_UI_POS_X, _retryUI.transform.localPosition.y, _retryUI.transform.localPosition.x);
-            _retryText.color = Color.white;
+            _nextStageUI.transform.localPosition = new Vector3(UI_POS_X, _nextStageUI.transform.localPosition.y, _nextStageUI.transform.localPosition.x);
+            _nextStageText.color = Color.white;
         }
+    }
+    /// <summary>
+    /// 次のステージの検索処理
+    /// </summary>
+    /// <param name="sceneConut">シーンの合計数</param>
+    /// <param name="nowSceneName">現在のシーン名</param>
+    /// <returns>次のシーン/returns>
+    public string SceneAnalysis(int sceneConut, string nowSceneName)
+    {
+        int nameConut = nowSceneName.Length;
+        int stageConut = int.Parse(nowSceneName.Substring(5, nameConut - 5));
+        stageConut++;
+        if (stageConut <= sceneConut - 1)
+        {
+            _sceneName = nowSceneName.Substring(0, 5) + stageConut.ToString();
+        }
+        else
+        {
+            _sceneName = "TitleScene";
+        }
+        return _sceneName;
     }
 
     #endregion
