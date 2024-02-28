@@ -187,6 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7296f0d3a7d836b48b444361825ef241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shotAudio: {fileID: 8300000, guid: 132e32ad4f5a02142af8b27fcae9981d, type: 3}
   _gameObject:
   - {fileID: 6445742773940630157, guid: 2666debf04d936f4b83e6f2b1ff6cd34, type: 3}
   - {fileID: 1733760138479700021, guid: 9ec319c2b9ebeec4893ce002dd6d10e2, type: 3}
@@ -237,3 +238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6ad36a73d48b8c42bad4fbfd18c30dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bossHP: 1
+  _hitAudio: {fileID: 8300000, guid: f46ab124a1a3db64c8abfbf882d986c9, type: 3}
+  _shootingAudio: {fileID: 8300000, guid: d8a9c664f8619c44c82bb8636f0ba540, type: 3}

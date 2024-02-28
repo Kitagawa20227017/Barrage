@@ -35,7 +35,19 @@ public class PlayerDamage : MonoBehaviour, IDamaged
 
     #endregion
 
+    [SerializeField,Header("残機")]
+    private int _playerStocks = 5;
 
+    [SerializeField, Header("ヒット音")]
+    private AudioClip _hitAudio = default;
+
+    [SerializeField, Header("撃墜音")]
+    private AudioClip _shootingAudio = default;
+
+    // AudioSource格納用
+    private AudioSource _audioSource = default;
+
+    // アニメーター取得用
     private Animator _playerAnimator = default;
 
     // 残機の表示
@@ -46,9 +58,6 @@ public class PlayerDamage : MonoBehaviour, IDamaged
 
     // プレイヤーのスプライトカラー
     private Color _targetColor = default;
-
-    // 残機
-    private int _playerStocks = 5;
 
     // 時間計測用のタイマー
     private float _timer = 0;
@@ -87,7 +96,9 @@ public class PlayerDamage : MonoBehaviour, IDamaged
         _target = this.gameObject.GetComponent<SpriteRenderer>();
         _uGUI = GameObject.Find("PlayerStock").GetComponent<TextMeshProUGUI>();
         _playerAnimator = gameObject.GetComponent<Animator>();
+        _audioSource = gameObject.GetComponent<AudioSource>();
         _targetColor = _target.color;
+        _uGUI.text = "×" + _playerStocks;
     }
 
     /// <summary>  
@@ -130,23 +141,29 @@ public class PlayerDamage : MonoBehaviour, IDamaged
             return;
         }
 
-        // 残機を減らす
-        _playerStocks--;
+        // 無敵時間ではないとき
+        if (!_isHit && _playerStocks > 0)
+        {
+            _playerStocks--;
+            // 無敵付与
+            _uGUI.text = "×" + _playerStocks;
+            _isHit = true;
+        }
 
         // 残機がないとき
         if (_playerStocks <= 0)
         {
+            _isHit = false;
             IsDeath = true;
             _playerAnimator.SetBool("isShootingDown", true);
+            // 音再生
+            _audioSource.PlayOneShot(_shootingAudio);
             return;
         }
-
-        // 無敵時間ではないとき
-        if (!_isHit && _playerStocks > 0)
+        else
         {
-            // 無敵付与
-            _uGUI.text = "×" + _playerStocks;
-            _isHit = true;
+            // 音再生
+            _audioSource.PlayOneShot(_hitAudio);
         }
     }
 

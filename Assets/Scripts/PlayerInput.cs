@@ -40,11 +40,17 @@ public class PlayerInput : MonoBehaviour
 
     #endregion
 
-    [SerializeField]
+    [SerializeField, Header("射撃音")]
+    private AudioClip _shotAudio = default;
+
+    [SerializeField,Header("プレイヤーの弾")]
     private GameObject _playerBall = default;
 
     // 弾の親オブジェクトのTransform
     private Transform _playerBullets = default;
+
+    // AudioSource格納用
+    private AudioSource _audioSource = default;
 
     // Animator格納用
     private Animator _playerAnimator = default;
@@ -75,7 +81,8 @@ public class PlayerInput : MonoBehaviour
         _playerAnimator.SetBool("isLeft", false);
         _playerAnimator.SetBool("isRight", false);
         _playerBullets = new GameObject("PlayerBullets").transform;
-
+        _audioSource = gameObject.GetComponent<AudioSource>();
+        
         // 弾の生成
         for (int i = 0; i <= INITIAL_INSTANTIATE; i++)
         {
@@ -94,10 +101,10 @@ public class PlayerInput : MonoBehaviour
     /// </summary>  
     void Update()
     {
-        //if(!_isPlayerInput)
-        //{
-        //    return;
-        //}
+        if (!_isPlayerInput)
+        {
+            return;
+        }
 
         // 入力値の代入
         _horizontal = Input.GetAxis("Horizontal");
@@ -213,7 +220,11 @@ public class PlayerInput : MonoBehaviour
             _timer += Time.deltaTime;
             if (_timer > _coolTime)
             {
+                // 発射
                 ObjPool(this.transform.position);
+
+                // 音再生
+                _audioSource.PlayOneShot(_shotAudio);
                 _timer = 0;
             }
         }

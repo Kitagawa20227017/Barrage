@@ -13,13 +13,26 @@ public class BossDamage : MonoBehaviour, IDamaged
 
     #region 変数  
 
+    [SerializeField, Header("HP")]
+    private int _bossHP = 1;
+
+    [SerializeField, Header("ヒット音")]
+    private AudioClip _hitAudio = default;
+
+    [SerializeField,Header("撃墜音")]
+    private AudioClip _shootingAudio = default;
+
+    // AudioSource格納用
+    private AudioSource _audioSource = default;
+
     // アニメーター取得用
     private Animator _bossAnimator = default;
 
-    // ボスのHP
-    private int _bossHP = 1;
+    // 撃墜判定
+    private bool _isDeath = false;
 
-    private bool isDeath = false;
+    // ゲームオーバー判定
+    private bool _isGameOver = false;
 
     #endregion
 
@@ -27,8 +40,8 @@ public class BossDamage : MonoBehaviour, IDamaged
 
     public bool IsDeath 
     { 
-        get => isDeath; 
-        set => isDeath = value; 
+        get => _isDeath; 
+        set => _isDeath = value; 
     }
     
     #endregion
@@ -40,8 +53,9 @@ public class BossDamage : MonoBehaviour, IDamaged
     /// </summary>  
     private void Start()
     {
-        // アニメーター取得
+        // 初期設定
         _bossAnimator = gameObject.GetComponent<Animator>();
+        _audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -50,6 +64,11 @@ public class BossDamage : MonoBehaviour, IDamaged
     /// <param name="playerOffensive">プレイヤーの攻撃力</param>
     public void IsHitJudgment(int playerOffensive)
     {
+        if(_isGameOver)
+        {
+            return;
+        }
+
         // ボスのHPを減らす
         _bossHP -= playerOffensive;
 
@@ -58,11 +77,17 @@ public class BossDamage : MonoBehaviour, IDamaged
         {
             // 撃破アニメーション再生
             _bossAnimator.SetBool("IsCrushing", true);
+
+            // 音再生
+            _audioSource.PlayOneShot(_shootingAudio);
         }
         else
         {
             // 被弾アニメーション再生
             _bossAnimator.SetBool("IsHit", true);
+
+            // 音再生
+            _audioSource.PlayOneShot(_hitAudio);
         }
     }
 
@@ -83,6 +108,11 @@ public class BossDamage : MonoBehaviour, IDamaged
         IsDeath = true;
         // 非アクティブ化
         this.gameObject.SetActive(false);
+    }
+
+    public void IsGameOver()
+    {
+        _isGameOver = !_isGameOver;
     }
 
     #endregion

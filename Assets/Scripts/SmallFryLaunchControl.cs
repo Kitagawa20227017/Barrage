@@ -20,6 +20,9 @@ public class SmallFryLaunchControl : MonoBehaviour
 
     #endregion
 
+    [SerializeField, Header("射撃音")]
+    private AudioClip _shotAudio = default;
+
     [SerializeField, Header("発射する弾")]
     private GameObject _gameObject = default;
 
@@ -37,6 +40,9 @@ public class SmallFryLaunchControl : MonoBehaviour
 
     [SerializeField, Range(0, 100), Header("弾の数")]
     private int _conutBall = 5;
+
+    // AudioSource格納用
+    private AudioSource _audioSource = default;
 
     // 弾の親オブジェクトのTransform
     private Transform _bullets = default;
@@ -68,6 +74,7 @@ public class SmallFryLaunchControl : MonoBehaviour
         // 初期設定
         _initialAngle = transform.eulerAngles.z;
         _bullets = new GameObject("SmallFryBullets").transform;
+        _audioSource = gameObject.GetComponent<AudioSource>();
 
         // 最初に生成しておく
         for (int i = 0; i < INITIAL_INSTANTIATE; i++)
@@ -111,6 +118,7 @@ public class SmallFryLaunchControl : MonoBehaviour
             // 弾を連続で撃つ
             if (_subtime >= _timer && _conut < _conutBall)
             {
+                _audioSource.PlayOneShot(_shotAudio);
                 ObjectPool(gameObject.transform.position);
                 _conut++;
                 _subtime = 0;

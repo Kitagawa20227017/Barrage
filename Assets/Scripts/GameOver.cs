@@ -29,15 +29,20 @@ public class GameOver : MonoBehaviour
     [SerializeField, Header("ExitUIオブジェクト")]
     private GameObject _retryUI = default;
 
+    [SerializeField, Header("選択音")]
+    private AudioClip _selectAudio = default;
+
+    // AudioSource格納用
+    private AudioSource _audioSource = default;
+
     // TextMesh格納用
     private TextMeshProUGUI _titleText = default;
     private TextMeshProUGUI _retryText = default;
 
-    // 
-    private bool flag = true;
+    // 選択している位置の確認
+    private bool _isSelect = true;
 
     // プレイヤーの入力方向の格納場所
-    private float _horizontal = default;
     private float _vertical = default;
 
     private string _sceneName = default;
@@ -57,6 +62,7 @@ public class GameOver : MonoBehaviour
         // 初期設定
         _titleText = _titleUI.GetComponent<TextMeshProUGUI>();
         _retryText = _retryUI.GetComponent<TextMeshProUGUI>();
+        _audioSource = gameObject.GetComponent<AudioSource>();
         gameObject.SetActive(true);
         _sceneName = SceneManager.GetActiveScene().name;
     }
@@ -89,24 +95,27 @@ public class GameOver : MonoBehaviour
 
         if (_vertical == PLUS)
         {
-            flag = true;
+            _isSelect = true;
         }
         else if (_vertical == MINUS)
         {
-            flag = false;
+            _isSelect = false;
         }
 
-        if (Input.GetButtonDown("Enter") && flag)
+        if (Input.GetButtonDown("Enter") && _isSelect)
         {
             SceneManager.LoadScene(_sceneName);
         }
-        else if (Input.GetButtonDown("Enter") && !flag)
+        else if (Input.GetButtonDown("Enter") && !_isSelect)
         {
             SceneManager.LoadScene("TitleScene");
         }
 
-        if (flag)
+        if (_isSelect)
         {
+            // 音再生
+            _audioSource.PlayOneShot(_selectAudio);
+
             // ステージを選択していない状態にする
             _titleUI.transform.localPosition =
                 new Vector3(SELECT_UI_POS_X, _titleUI.transform.localPosition.y, _titleUI.transform.localPosition.x);
@@ -118,6 +127,9 @@ public class GameOver : MonoBehaviour
         }
         else
         {
+            // 音再生
+            _audioSource.PlayOneShot(_selectAudio);
+
             // ステージを選択している状態にする
             _titleUI.transform.localPosition = new Vector3(0, _titleUI.transform.localPosition.y, _titleUI.transform.localPosition.x);
             _titleText.color = Color.red;

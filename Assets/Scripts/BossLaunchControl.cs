@@ -16,11 +16,17 @@ public class BossLaunchControl : MonoBehaviour
     // 親オブジェクトの名前
     private const string BULLET_NAME = "BossBullets";
 
+    [SerializeField, Header("射撃音")]
+    private AudioClip _shotAudio = default;
+
     [SerializeField, Header("弾")]
     private GameObject[] _gameObject;
 
     // 弾生成時の親オブジェクトのトランスフォーム
     private Transform[] _bullets;
+
+    // AudioSource格納用
+    private AudioSource _audioSource = default;
 
     #endregion
 
@@ -33,6 +39,8 @@ public class BossLaunchControl : MonoBehaviour
     {
         // 初期設定
         _bullets = new Transform[_gameObject.Length];
+        _audioSource = gameObject.GetComponent<AudioSource>();
+
         for (int i = 0; i < _gameObject.Length; i++)
         {
             _bullets[i] = new GameObject(BULLET_NAME + i).transform;
@@ -58,6 +66,7 @@ public class BossLaunchControl : MonoBehaviour
     public void ObjectPool(Vector3 pos, int qty, float angle, int patrn)
     {
         bool isflag = false;
+        _audioSource.PlayOneShot(_shotAudio);
         foreach (Transform bulletsTrans in _bullets[patrn])
         {
             if (!bulletsTrans.gameObject.activeSelf)

@@ -118,6 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bcfcb5a83a53834a8f713d6ea892585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shotAudio: {fileID: 8300000, guid: 132e32ad4f5a02142af8b27fcae9981d, type: 3}
   _gameObject: {fileID: 1733760138479700021, guid: 9ec319c2b9ebeec4893ce002dd6d10e2, type: 3}
   _timer: 0.35
   _time: 0.85
@@ -150,6 +151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyHP: 2
+  _hitAudio: {fileID: 8300000, guid: f46ab124a1a3db64c8abfbf882d986c9, type: 3}
+  _shootingAudio: {fileID: 8300000, guid: d8a9c664f8619c44c82bb8636f0ba540, type: 3}
 --- !u!60 &3090495056906672369
 PolygonCollider2D:
   m_ObjectHideFlags: 0

@@ -26,10 +26,6 @@ public class CurveMoveBall : MonoBehaviour
     [SerializeField]
     private float _directionsTimer = 2f;
 
-    // どの角度まで変わるか
-    [SerializeField]
-    private int _angle = 90;
-
     // 角度が変わるスピード
     [SerializeField]
     private int _angleMoveSpeed = 100;

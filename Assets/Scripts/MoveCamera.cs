@@ -41,7 +41,6 @@ public class MoveCamera : MonoBehaviour
     public void IsMoveCamera()
     {
         _isMove = !_isMove;
-        Debug.Log(_isMove);
     }
 
     #endregion

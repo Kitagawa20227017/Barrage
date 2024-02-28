@@ -16,6 +16,15 @@ public class IsHitEnemy : MonoBehaviour, IDamaged
     [SerializeField, Header("HP")]
     private int _enemyHP = 1;
 
+    [SerializeField, Header("ヒット音")]
+    private AudioClip _hitAudio = default;
+
+    [SerializeField, Header("撃墜音")]
+    private AudioClip _shootingAudio = default;
+
+    // AudioSource格納用
+    private AudioSource _audioSource = default;
+
     // アニメーター取得用
     private Animator _enemyAnimator = default;
 
@@ -31,6 +40,7 @@ public class IsHitEnemy : MonoBehaviour, IDamaged
     {
         // 初期設定
         _enemyAnimator = gameObject.GetComponent<Animator>();
+        _audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -47,11 +57,17 @@ public class IsHitEnemy : MonoBehaviour, IDamaged
         {
             // アニメーション再生
             _enemyAnimator.SetBool("isHit", true);
+
+            // 音再生
+            _audioSource.PlayOneShot(_shootingAudio);
         }
         else
         {
             // アニメーション再生
             _enemyAnimator.SetBool("IsHitBall", true);
+
+            // 音再生
+            _audioSource.PlayOneShot(_hitAudio);
         }
     }
 

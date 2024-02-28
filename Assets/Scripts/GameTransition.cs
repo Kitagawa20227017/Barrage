@@ -83,6 +83,7 @@ public class GameTransition : MonoBehaviour
             _moveCamera.IsMoveCamera();
             _playerInput.IsPlayerInput();
             _playerDamage.IsStop();
+            _bossDamage.IsGameOver();
 
             // 敵の非アクティブ化
             _enemys.SetActive(false);
