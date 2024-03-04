@@ -64,6 +64,7 @@ public class BossDamage : MonoBehaviour, IDamaged
     /// <param name="playerOffensive">プレイヤーの攻撃力</param>
     public void IsHitJudgment(int playerOffensive)
     {
+        // ゲームオーバーなら処理しない
         if(_isGameOver)
         {
             return;
@@ -110,6 +111,9 @@ public class BossDamage : MonoBehaviour, IDamaged
         this.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// GameTransitionが呼ぶ処理
+    /// </summary>
     public void IsGameOver()
     {
         _isGameOver = !_isGameOver;

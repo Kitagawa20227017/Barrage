@@ -65,6 +65,7 @@ public class PlayerInput : MonoBehaviour
     private float _horizontal = default;
     private float _vertical = default;
 
+    // 入力を受け付けるかどうか
     private bool _isPlayerInput = false;
 
     #endregion
@@ -101,6 +102,7 @@ public class PlayerInput : MonoBehaviour
     /// </summary>  
     void Update()
     {
+        // 入力を受け付けていないとき処理しない
         if (!_isPlayerInput)
         {
             return;
@@ -255,6 +257,10 @@ public class PlayerInput : MonoBehaviour
         Instantiate(_playerBall, pos, Quaternion.Euler(0, 0, transform.eulerAngles.z), _playerBullets);
     }
 
+
+    /// <summary>
+    /// GameTransitionが呼ぶ処理
+    /// </summary>
     public void IsPlayerInput()
     {
         _isPlayerInput = !_isPlayerInput;

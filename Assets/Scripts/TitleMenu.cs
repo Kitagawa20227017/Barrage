@@ -18,6 +18,7 @@ public class TitleMenu : MonoBehaviour
     private const float PLUS = 1f;
     private const float MINUS = -1f;
 
+    // 選択中のUIの位置
     private const float SELECT_UI_POS_X = 50f;
 
     #endregion
@@ -31,19 +32,25 @@ public class TitleMenu : MonoBehaviour
     [SerializeField,Header("ステージ選択UI")]
     private GameObject _stageSummary = default;
 
+    [SerializeField, Header("選択音")]
+    private AudioClip _selectAudio = default;
+
     // TextMesh格納用
     private TextMeshProUGUI _stageSelectText = default;
     private TextMeshProUGUI _exitText = default;
 
-    // Exitにカーソルが合ってるかどうか
-    private bool _isExit = false;
-
     // プレイヤーの入力方向の格納場所
     private float _vertical = default;
 
-    #endregion
+    // AudioSource格納用
+    private AudioSource _audioSource = default;
 
-    #region プロパティ  
+    // Exitにカーソルが合ってるかどうか
+    private bool _isExit = false;
+
+    // 複数回処理をしないようにするためのフラグ
+    private bool _isNotLoop = false;
+
     #endregion
 
     #region メソッド  
@@ -56,6 +63,7 @@ public class TitleMenu : MonoBehaviour
         // 初期設定
         _stageSelectText = _stageSelectUI.GetComponent<TextMeshProUGUI>();
         _exitText = _exitUI.GetComponent<TextMeshProUGUI>();
+        _audioSource = gameObject.GetComponent<AudioSource>();
         gameObject.SetActive(true);
     }
 
@@ -110,8 +118,20 @@ public class TitleMenu : MonoBehaviour
             gameObject.SetActive(false);
         }
 
+        // 選択中のUIならこれ以上処理しない
+        if(_isExit == _isNotLoop)
+        {
+            return;
+        }
+
+        // 選択中のUIを保持
+        _isNotLoop = _isExit;
+
         if (_isExit)
         {
+            // 音再生
+            _audioSource.PlayOneShot(_selectAudio);
+
             // ステージを選択していない状態にする
             _stageSelectUI.transform.localPosition =
                 new Vector3(SELECT_UI_POS_X, _stageSelectUI.transform.localPosition.y, _stageSelectUI.transform.localPosition.x);
@@ -123,6 +143,9 @@ public class TitleMenu : MonoBehaviour
         }
         else
         {
+            // 音再生
+            _audioSource.PlayOneShot(_selectAudio);
+
             // ステージを選択している状態にする
             _stageSelectUI.transform.localPosition = new Vector3(0, _stageSelectUI.transform.localPosition.y, _stageSelectUI.transform.localPosition.x);
             _stageSelectText.color = Color.red;

@@ -148,7 +148,10 @@ public class SmallFryLaunchControl : MonoBehaviour
     /// <param name="pos">敵の現在位置</param>
     private void ObjectPool(Vector3 pos)
     {
+        // 弾の角度格納用
         float settingAngle = default;
+
+        // アクティブのオブジェクトがあるかどうか
         bool isActive = false;
 
         #region 正面の弾

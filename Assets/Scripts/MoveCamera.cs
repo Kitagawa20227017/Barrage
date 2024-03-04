@@ -20,6 +20,7 @@ public class MoveCamera : MonoBehaviour
     [SerializeField, Header("移動スピード")]
     private float _moveSpeed = 4.5f;
 
+    // 動けるかどうか判定
     private bool _isMove = false;
 
     #endregion
@@ -38,6 +39,9 @@ public class MoveCamera : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// GameTransitionが呼ぶ処理
+    /// </summary>
     public void IsMoveCamera()
     {
         _isMove = !_isMove;

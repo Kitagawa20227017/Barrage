@@ -24,11 +24,11 @@ public class StraightLineMove : MonoBehaviour
     [SerializeField, Header("弾の速さ")]
     private float _moveSpeed = 7.5f;
 
-    // 弾の進む方向の計算
-    private int _moveDirection = default;
-
     // Transform格納用
     private Transform _transform = default;
+
+    // 弾の進む方向の計算
+    private int _moveDirection = default;
 
     // 弾の進む方向
     private enum Direction

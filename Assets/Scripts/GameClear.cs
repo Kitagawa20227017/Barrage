@@ -1,8 +1,8 @@
 // ---------------------------------------------------------  
 // GameClear.cs  
 //   
-// 作成日:  
-// 作成者:  
+// 作成日: 2024/2/23
+// 作成者: 北川 稔明  
 // ---------------------------------------------------------  
 using UnityEngine;
 using TMPro;
@@ -25,6 +25,7 @@ public class GameClear : MonoBehaviour
     private const float PLUS = 1f;
     private const float MINUS = -1f;
 
+    // UIの位置
     private const float UI_MOVE_POS_X = 170f;
     private const float UI_POS_X = 220f;
 
@@ -33,10 +34,10 @@ public class GameClear : MonoBehaviour
     [SerializeField,Header("ClearUIオブジェクト")]
     private GameObject _clearUI = default;
 
-    [SerializeField, Header("StageUIオブジェクト")]
+    [SerializeField, Header("TitleUIオブジェクト")]
     private GameObject _titleUI = default;
 
-    [SerializeField, Header("ExitUIオブジェクト")]
+    [SerializeField, Header("NextStageUIオブジェクト")]
     private GameObject _nextStageUI = default;
 
     [SerializeField, Header("選択音")]
@@ -50,14 +51,17 @@ public class GameClear : MonoBehaviour
     private TextMeshProUGUI _nextStageText = default;
     private TextMeshProUGUI _clearText = default;
 
-    // 選択している位置の確認
-    private bool _isSelect = true;
-
     // プレイヤーの入力方向の格納場所
     private float _vertical = default;
 
     // 現在のシーン名
     private string _sceneName = default;
+
+    // 選択している位置の確認
+    private bool _isSelect = true;
+
+    // 複数回処理をしないようにするためのフラグ
+    private bool _isNotLoop = true;
 
     #endregion
 
@@ -103,16 +107,19 @@ public class GameClear : MonoBehaviour
         }
 
         #endregion
-
+        
+        // Wキーを押したとき
         if (_vertical == PLUS)
         {
             _isSelect = true;
         }
+        // Sキーを押したとき
         else if (_vertical == MINUS)
         {
             _isSelect = false;
         }
 
+        // Enterを押したとき
         if (Input.GetButtonDown("Enter") && _isSelect)
         {
             SceneManager.LoadScene(_sceneName);
@@ -122,17 +129,27 @@ public class GameClear : MonoBehaviour
             SceneManager.LoadScene("TitleScene");
         }
 
+        // 選択中のUIならこれ以上処理しない
+        if (_isSelect == _isNotLoop)
+        {
+            return;
+        }
+
+        // 選択中のUIを記録
+        _isNotLoop = _isSelect;
+
+        // Titleを選択中
         if (_isSelect)
         {
             // 音再生
             _audioSource.PlayOneShot(_selectAudio);
-            
-            // ステージを選択していない状態にする
+
+            // Titleを選択していない状態にする
             _titleUI.transform.localPosition =
                 new Vector3(UI_POS_X, _titleUI.transform.localPosition.y, _titleUI.transform.localPosition.x);
             _titleText.color = Color.white;
 
-            // Exitを選択している状態にする
+            // NextStageを選択している状態にする
             _nextStageUI.transform.localPosition = new Vector3(UI_MOVE_POS_X, _nextStageUI.transform.localPosition.y, _nextStageUI.transform.localPosition.x);
             _nextStageText.color = Color.red;
         }
@@ -141,11 +158,11 @@ public class GameClear : MonoBehaviour
             // 音再生
             _audioSource.PlayOneShot(_selectAudio);
 
-            // ステージを選択している状態にする
+            // Titleを選択している状態にする
             _titleUI.transform.localPosition = new Vector3(UI_MOVE_POS_X, _titleUI.transform.localPosition.y, _titleUI.transform.localPosition.x);
             _titleText.color = Color.red;
 
-            // Exitを選択していない状態にする
+            // NextStageを選択していない状態にする
             _nextStageUI.transform.localPosition = new Vector3(UI_POS_X, _nextStageUI.transform.localPosition.y, _nextStageUI.transform.localPosition.x);
             _nextStageText.color = Color.white;
         }
@@ -159,9 +176,16 @@ public class GameClear : MonoBehaviour
     /// <returns>次のシーン/returns>
     public string SceneAnalysis(int sceneConut, string nowSceneName)
     {
+        // シーン名の長さを入れる
         int nameConut = nowSceneName.Length;
+
+        // 全体文字数から「Stage」の５文字引いた数を代入
         int stageConut = int.Parse(nowSceneName.Substring(STAGE_WORD_COUNT, nameConut - STAGE_WORD_COUNT));
+        
+        // 次のステージの数字
         stageConut++;
+
+        // タイトルシーンを除いたシーンの合計との比較
         if (stageConut <= sceneConut - TITLE_SCENE)
         {
             _sceneName = nowSceneName.Substring(0, STAGE_WORD_COUNT) + stageConut.ToString();
@@ -170,6 +194,8 @@ public class GameClear : MonoBehaviour
         {
             _sceneName = "TitleScene";
         }
+
+        // 遷移するシーン名を返す 
         return _sceneName;
     }
 

@@ -1,8 +1,8 @@
 // ---------------------------------------------------------  
 // GameOver.cs  
 //   
-// 作成日:  
-// 作成者:  
+// 作成日: 2024/2/23
+// 作成者: 北川 稔明
 // ---------------------------------------------------------  
 using UnityEngine;
 using TMPro;
@@ -19,14 +19,15 @@ public class GameOver : MonoBehaviour
     private const float PLUS = 1f;
     private const float MINUS = -1f;
 
+    // 選択されていないUIの位置
     private const float SELECT_UI_POS_X = 170f;
 
     #endregion
 
-    [SerializeField, Header("StageUIオブジェクト")]
+    [SerializeField, Header("TitleUIオブジェクト")]
     private GameObject _titleUI = default;
 
-    [SerializeField, Header("ExitUIオブジェクト")]
+    [SerializeField, Header("RetryUIオブジェクト")]
     private GameObject _retryUI = default;
 
     [SerializeField, Header("選択音")]
@@ -39,17 +40,18 @@ public class GameOver : MonoBehaviour
     private TextMeshProUGUI _titleText = default;
     private TextMeshProUGUI _retryText = default;
 
-    // 選択している位置の確認
-    private bool _isSelect = true;
-
     // プレイヤーの入力方向の格納場所
     private float _vertical = default;
 
+    // 現在のシーン名格納用
     private string _sceneName = default;
 
-    #endregion
+    // 選択している位置の確認
+    private bool _isSelect = true;
 
-    #region プロパティ  
+    // 複数回処理をしないようにするためのフラグ
+    private bool _isNotLoop = true;
+
     #endregion
 
     #region メソッド  
@@ -93,15 +95,18 @@ public class GameOver : MonoBehaviour
 
         #endregion
 
+        // Wキーを押したとき
         if (_vertical == PLUS)
         {
             _isSelect = true;
         }
+        // Sキーを押したとき
         else if (_vertical == MINUS)
         {
             _isSelect = false;
         }
 
+        // Enterキーを押したとき
         if (Input.GetButtonDown("Enter") && _isSelect)
         {
             SceneManager.LoadScene(_sceneName);
@@ -111,30 +116,41 @@ public class GameOver : MonoBehaviour
             SceneManager.LoadScene("TitleScene");
         }
 
+        // 選択中のUIならこれ以上処理しない
+        if (_isSelect == _isNotLoop)
+        {
+            return;
+        }
+
+        // 選択中のUIを記録
+        _isNotLoop = _isSelect;
+
+        // Titleを選択中
         if (_isSelect)
         {
             // 音再生
             _audioSource.PlayOneShot(_selectAudio);
 
-            // ステージを選択していない状態にする
+            // Titleを選択していない状態にする
             _titleUI.transform.localPosition =
                 new Vector3(SELECT_UI_POS_X, _titleUI.transform.localPosition.y, _titleUI.transform.localPosition.x);
             _titleText.color = Color.white;
 
-            // Exitを選択している状態にする
+            // Retryを選択している状態にする
             _retryUI.transform.localPosition = new Vector3(0, _retryUI.transform.localPosition.y, _retryUI.transform.localPosition.x);
             _retryText.color = Color.red;
         }
+        // Retryを選択中
         else
         {
             // 音再生
             _audioSource.PlayOneShot(_selectAudio);
 
-            // ステージを選択している状態にする
+            // Retryを選択している状態にする
             _titleUI.transform.localPosition = new Vector3(0, _titleUI.transform.localPosition.y, _titleUI.transform.localPosition.x);
             _titleText.color = Color.red;
 
-            // Exitを選択していない状態にする
+            // Retryを選択していない状態にする
             _retryUI.transform.localPosition = new Vector3(SELECT_UI_POS_X, _retryUI.transform.localPosition.y, _retryUI.transform.localPosition.x);
             _retryText.color = Color.white;
         }

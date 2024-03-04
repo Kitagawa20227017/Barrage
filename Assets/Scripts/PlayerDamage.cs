@@ -71,6 +71,7 @@ public class PlayerDamage : MonoBehaviour, IDamaged
     // 死亡判定
     private bool _isDeath = false;
 
+    // ゲームが止まっているかの判定
     private bool _isStop = false;
 
     #endregion
@@ -136,6 +137,7 @@ public class PlayerDamage : MonoBehaviour, IDamaged
     /// <param name="playerOffensive">プレイヤーの攻撃力</param>
     public void IsHitJudgment(int playerOffensive)
     {
+        // ゲームが止まっているとき処理しない
         if(_isStop)
         {
             return;
@@ -176,6 +178,9 @@ public class PlayerDamage : MonoBehaviour, IDamaged
         _target.color = _targetColor;
     }
 
+    /// <summary>
+    /// GameTransitionが呼ぶ処理
+    /// </summary>
     public void IsStop()
     {
         _isStop = !_isStop;

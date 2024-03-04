@@ -13,8 +13,15 @@ public class BossLaunchControl : MonoBehaviour
 
     #region 変数  
 
+    #region const定数
+
     // 親オブジェクトの名前
     private const string BULLET_NAME = "BossBullets";
+
+    // 最初に生成する弾の数
+    private const int INITIAL_INSTANTIATE = 30;
+
+    #endregion
 
     [SerializeField, Header("射撃音")]
     private AudioClip _shotAudio = default;
@@ -23,7 +30,7 @@ public class BossLaunchControl : MonoBehaviour
     private GameObject[] _gameObject;
 
     // 弾生成時の親オブジェクトのトランスフォーム
-    private Transform[] _bullets;
+    private Transform[] _bullets = default;
 
     // AudioSource格納用
     private AudioSource _audioSource = default;
@@ -44,7 +51,7 @@ public class BossLaunchControl : MonoBehaviour
         for (int i = 0; i < _gameObject.Length; i++)
         {
             _bullets[i] = new GameObject(BULLET_NAME + i).transform;
-            for (int j = 0; j < 100; j++)
+            for (int j = 0; j < INITIAL_INSTANTIATE; j++)
             {
                 Instantiate(_gameObject[i], gameObject.transform.position, Quaternion.Euler(0, 0, 0), _bullets[i]);
             }
@@ -65,7 +72,7 @@ public class BossLaunchControl : MonoBehaviour
     /// <param name="patrn">弾の種類</param>
     public void ObjectPool(Vector3 pos, int qty, float angle, int patrn)
     {
-        bool isflag = false;
+        bool isActive = false;
         _audioSource.PlayOneShot(_shotAudio);
         foreach (Transform bulletsTrans in _bullets[patrn])
         {
@@ -76,17 +83,18 @@ public class BossLaunchControl : MonoBehaviour
                 // アクティブにする
                 bulletsTrans.gameObject.SetActive(true);
 
-                isflag = true;
+                isActive = true;
                 break;
             }
             else
             {
-                isflag = false;
+                // 非アクティブのオブジェクトがない
+                isActive = false;
             }
         }
 
         // 非アクティブなオブジェクトがない場合新規生成
-        if (!isflag)
+        if (!isActive)
         {
             // 生成時にbulletsの子オブジェクトにする
             Instantiate(_gameObject[patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z), _bullets[patrn]);
@@ -94,7 +102,7 @@ public class BossLaunchControl : MonoBehaviour
 
         for (int i = 1; i <= qty; i++)
         {
-            isflag = false;
+            isActive = false;
             float kau = angle * i;
             foreach (Transform bulletsTrans in _bullets[patrn])
             {
@@ -104,17 +112,17 @@ public class BossLaunchControl : MonoBehaviour
                     bulletsTrans.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + kau));
                     // アクティブにする
                     bulletsTrans.gameObject.SetActive(true);
-                    isflag = true;
+                    isActive = true;
                     break;
                 }
                 else
                 {
-                    isflag = false;
+                    isActive = false;
                 }
             }
 
             // 非アクティブなオブジェクトがない場合新規生成
-            if (!isflag)
+            if (!isActive)
             {
                 // 生成時にbulletsの子オブジェクトにする
                 Instantiate(_gameObject[patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + kau), _bullets[patrn]);
@@ -123,7 +131,7 @@ public class BossLaunchControl : MonoBehaviour
 
         for (int i = 1; i <= qty; i++)
         {
-            isflag = false;
+            isActive = false;
             float kau = angle * i;
             foreach (Transform bulletsTrans in _bullets[patrn])
             {
@@ -133,17 +141,17 @@ public class BossLaunchControl : MonoBehaviour
                     bulletsTrans.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau));
                     // アクティブにする
                     bulletsTrans.gameObject.SetActive(true);
-                    isflag = true;
+                    isActive = true;
                     break;
                 }
                 else
                 {
-                    isflag = false;
+                    isActive = false;
                 }
             }
 
             // 非アクティブなオブジェクトがない場合新規生成
-            if (!isflag)
+            if (!isActive)
             {
                 //生成時にbulletsの子オブジェクトにする
                 Instantiate(_gameObject[patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau), _bullets[patrn]);
