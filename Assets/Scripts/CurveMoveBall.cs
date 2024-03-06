@@ -73,7 +73,7 @@ public class CurveMoveBall : MonoBehaviour
     /// <summary>  
     /// 更新前処理  
     /// </summary>  
-    void Start()
+    private void Start()
     {
         // 初期設定
         _transform = this.transform;

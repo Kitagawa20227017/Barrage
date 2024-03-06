@@ -42,7 +42,7 @@ public class BossLaunchControl : MonoBehaviour
     /// <summary>  
     /// 更新前処理  
     /// </summary>  
-    void Start()
+    private void Start()
     {
         // 初期設定
         _bullets = new Transform[_gameObject.Length];

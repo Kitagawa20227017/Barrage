@@ -374,7 +374,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2046532704906223662, guid: 25be3a4c223d0434798b40cc29f2596d, type: 3}
       propertyPath: _playerStocks
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2908560567222759627, guid: 25be3a4c223d0434798b40cc29f2596d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2827,7 +2827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6ad36a73d48b8c42bad4fbfd18c30dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bossHP: 2
+  _bossHP: 15
   _hitAudio: {fileID: 8300000, guid: f46ab124a1a3db64c8abfbf882d986c9, type: 3}
   _shootingAudio: {fileID: 8300000, guid: d8a9c664f8619c44c82bb8636f0ba540, type: 3}
 --- !u!114 &1665264996

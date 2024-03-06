@@ -69,7 +69,7 @@ public class SmallFryLaunchControl : MonoBehaviour
     /// <summary>  
     /// 更新前処理  
     /// </summary>  
-    void Start()
+    private void Start()
     {
         // 初期設定
         _initialAngle = transform.eulerAngles.z;
@@ -92,7 +92,7 @@ public class SmallFryLaunchControl : MonoBehaviour
     /// <summary>  
     /// 更新処理  
     /// </summary>  
-    void Update()
+    private void Update()
     {
         // 画面外なら処理しない
         if (!_isInCamera)
