@@ -15,11 +15,14 @@ public class BossLaunchControl : MonoBehaviour
 
     #region const定数
 
+    // 初期値
+    private const int INITIAL_VALUE = 1;
+
     // 親オブジェクトの名前
     private const string BULLET_NAME = "BossBullets";
 
     // 最初に生成する弾の数
-    private const int INITIAL_INSTANTIATE = 30;
+    private const int INITIAL_INSTANTIATE = 15;
 
     #endregion
 
@@ -100,16 +103,16 @@ public class BossLaunchControl : MonoBehaviour
             Instantiate(_gameObject[patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z), _bullets[patrn]);
         }
 
-        for (int i = 1; i <= qty; i++)
+        for (int i = INITIAL_VALUE; i <= qty; i++)
         {
             isActive = false;
-            float kau = angle * i;
+            float shootingAngle = angle * i;
             foreach (Transform bulletsTrans in _bullets[patrn])
             {
                 if (!bulletsTrans.gameObject.activeSelf)
                 {
                     // 非アクティブなオブジェクトの位置と回転を設定
-                    bulletsTrans.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + kau));
+                    bulletsTrans.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + shootingAngle));
                     // アクティブにする
                     bulletsTrans.gameObject.SetActive(true);
                     isActive = true;
@@ -125,20 +128,20 @@ public class BossLaunchControl : MonoBehaviour
             if (!isActive)
             {
                 // 生成時にbulletsの子オブジェクトにする
-                Instantiate(_gameObject[patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + kau), _bullets[patrn]);
+                Instantiate(_gameObject[patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z + shootingAngle), _bullets[patrn]);
             }
         }
 
-        for (int i = 1; i <= qty; i++)
+        for (int i = INITIAL_VALUE; i <= qty; i++)
         {
             isActive = false;
-            float kau = angle * i;
+            float shootingAngle = angle * i;
             foreach (Transform bulletsTrans in _bullets[patrn])
             {
                 if (!bulletsTrans.gameObject.activeSelf)
                 {
                     // 非アクティブなオブジェクトの位置と回転を設定
-                    bulletsTrans.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau));
+                    bulletsTrans.SetPositionAndRotation(pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - shootingAngle));
                     // アクティブにする
                     bulletsTrans.gameObject.SetActive(true);
                     isActive = true;
@@ -154,7 +157,7 @@ public class BossLaunchControl : MonoBehaviour
             if (!isActive)
             {
                 //生成時にbulletsの子オブジェクトにする
-                Instantiate(_gameObject[patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - kau), _bullets[patrn]);
+                Instantiate(_gameObject[patrn], pos, Quaternion.Euler(0, 0, transform.eulerAngles.z - shootingAngle), _bullets[patrn]);
             }
         }
     }

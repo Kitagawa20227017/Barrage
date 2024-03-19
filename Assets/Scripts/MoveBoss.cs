@@ -33,7 +33,7 @@ public class MoveBoss : MonoBehaviour
     private const float ATTACK_TIME = 4f;
 
     // 攻撃の弾数、角度
-    private const int BALL_COUNT_PATRN = 4;
+    private const int BALL_COUNT_PATRN = 6;
     private const float ANGLE_PATRN = 15;
 
     #endregion

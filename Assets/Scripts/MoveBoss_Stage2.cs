@@ -3,11 +3,10 @@
 // 
 // ステージ2のボスの行動処理
 //   
-// 作成日:  
-// 作成者:  
+// 作成日: 2024/2/10
+// 作成者: 北川 稔明
 // ---------------------------------------------------------  
 using UnityEngine;
-using System.Collections;
 
 public class MoveBoss_Stage2 : MonoBehaviour
 {
@@ -34,8 +33,8 @@ public class MoveBoss_Stage2 : MonoBehaviour
     private const float ATTACK_TIME = 3f;
 
     // 攻撃の弾数、角度
-    private const int BALL_COUNT_PATRN = 5;
-    private const float ANGLE_PATRN = 15;
+    private const int BALL_COUNT_PATRN = 10;
+    private const float ANGLE_PATRN = 10;
 
     #endregion
 
