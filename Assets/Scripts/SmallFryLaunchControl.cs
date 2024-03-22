@@ -16,7 +16,7 @@ public class SmallFryLaunchControl : MonoBehaviour
     #region const定数 
 
     // 最初に生成する弾の数
-    private const int INITIAL_INSTANTIATE = 30;
+    private const int INITIAL_INSTANTIATE = 5;
 
     #endregion
 
@@ -73,7 +73,8 @@ public class SmallFryLaunchControl : MonoBehaviour
     {
         // 初期設定
         _initialAngle = transform.eulerAngles.z;
-        _bullets = new GameObject("SmallFryBullets").transform;
+        _bullets = GameObject.Find("SmallFryBullets").transform;
+        //_bullets = new GameObject("SmallFryBullets").transform;
         _audioSource = gameObject.GetComponent<AudioSource>();
 
         // 最初に生成しておく

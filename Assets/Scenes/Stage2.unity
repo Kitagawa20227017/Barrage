@@ -1054,7 +1054,7 @@ PrefabInstance:
     - target: {fileID: 4553114665399502414, guid: 1d92125bbc90a094da485444160c8d19, type: 3}
       propertyPath: _gameObject
       value: 
-      objectReference: {fileID: 889040791772816187, guid: 1307d00385065d24397e9b1e1a1ff863, type: 3}
+      objectReference: {fileID: 6445742773940630157, guid: 2666debf04d936f4b83e6f2b1ff6cd34, type: 3}
     - target: {fileID: 4553114665399502414, guid: 1d92125bbc90a094da485444160c8d19, type: 3}
       propertyPath: _ballQuantity
       value: 1
@@ -1192,6 +1192,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4553114665399502414, guid: 1d92125bbc90a094da485444160c8d19, type: 3}
+      propertyPath: _gameObject
+      value: 
+      objectReference: {fileID: 6445742773940630157, guid: 2666debf04d936f4b83e6f2b1ff6cd34, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1471,6 +1475,10 @@ PrefabInstance:
       propertyPath: _conutBall
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4553114665399502414, guid: 1d92125bbc90a094da485444160c8d19, type: 3}
+      propertyPath: _gameObject
+      value: 
+      objectReference: {fileID: 6445742773940630157, guid: 2666debf04d936f4b83e6f2b1ff6cd34, type: 3}
     - target: {fileID: 4553114665399502414, guid: 1d92125bbc90a094da485444160c8d19, type: 3}
       propertyPath: _ballQuantity
       value: 1
@@ -1965,6 +1973,37 @@ Transform:
   - {fileID: 277009202}
   - {fileID: 1825124798}
   - {fileID: 1931556254}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &793605296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 793605297}
+  m_Layer: 0
+  m_Name: SmallFryBullets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &793605297
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793605296}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -498.7616, y: 806.3982, z: -12.828228}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &927935183
@@ -3478,7 +3517,7 @@ PrefabInstance:
     - target: {fileID: 4553114665399502414, guid: 1d92125bbc90a094da485444160c8d19, type: 3}
       propertyPath: _gameObject
       value: 
-      objectReference: {fileID: 889040791772816187, guid: 1307d00385065d24397e9b1e1a1ff863, type: 3}
+      objectReference: {fileID: 6445742773940630157, guid: 2666debf04d936f4b83e6f2b1ff6cd34, type: 3}
     - target: {fileID: 4553114665399502414, guid: 1d92125bbc90a094da485444160c8d19, type: 3}
       propertyPath: _ballQuantity
       value: 1
@@ -4072,3 +4111,4 @@ SceneRoots:
   - {fileID: 1554016190}
   - {fileID: 1603569084}
   - {fileID: 607407932}
+  - {fileID: 793605297}
