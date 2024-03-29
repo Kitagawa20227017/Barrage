@@ -100,7 +100,7 @@ public class PlayerInput : MonoBehaviour
     /// <summary>  
     /// 更新処理  
     /// </summary>  
-    void Update()
+    private void Update()
     {
         // 入力を受け付けていないとき処理しない
         if (!_isPlayerInput)
